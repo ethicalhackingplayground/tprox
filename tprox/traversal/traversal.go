@@ -92,7 +92,7 @@ func TestTraversal(wg *sync.WaitGroup, url string, payload string, silent bool) 
 			wordBytes := bufio.NewScanner(wordFile)
 			count, err := lineCounter(wordFile)
 			if err != nil {
-				gologger.Error().Msg(err.Message())
+				gologger.Error().Msg(err.Error())
 				return
 			}
 			bar := progressbar.Default(int64(count))
