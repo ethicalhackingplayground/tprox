@@ -32,9 +32,10 @@ func run(crawl bool, silent bool) {
 	urls := make(chan string)
 	// Crawling is enabled
 	c := colly.NewCollector(
-		// Visit only root url and urls which start with "e" or "h" on httpbin.org
+		// Visit only these root domain
+		colly.AllowedDomains(args.Scope),
+		// Visit urls and that contain the following regex pattern
 		colly.URLFilters(
-			regexp.MustCompile(args.Scope),
 			regexp.MustCompile(args.Regex),
 		),
 		colly.MaxDepth(args.Depth),
@@ -94,4 +95,6 @@ func Crawl(c *colly.Collector, wg *sync.WaitGroup, url string, payload string, s
 
 	})
 	c.Visit(url)
+	// Wait until threads are finished
+	c.Wait()
 }
