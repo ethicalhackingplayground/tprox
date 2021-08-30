@@ -15,6 +15,8 @@ import (
 // The payloads to test
 var Payloads = [3]string{"..%2f", "..;/", "%2e%2e%2f"}
 
+var crawledUrls = []string{}
+
 // Parse the arguments and run the test function.
 func main() {
 	parsed, crawl, silent := args.ParseArgs()
@@ -29,10 +31,12 @@ func main() {
 func run(crawl bool, silent bool) {
 
 	urls := make(chan string)
+	crawls := make(chan string)
 
 	// Create a new crolly collector
 	c := colly.NewCollector(
 		colly.MaxDepth(args.Depth),
+		colly.Async(true),
 	)
 
 	// Limit the maximum parallelism to 2
@@ -53,6 +57,9 @@ func run(crawl bool, silent bool) {
 				for _, p := range Payloads {
 					if crawl {
 						Crawl(c, &wg, url, p, silent)
+						for _, crawl := range crawls {
+							traversal.TestTraversal(wg, crawl, payload, silent)
+						}
 
 					} else {
 						traversal.TestTraversal(&wg, url, p, silent)
@@ -65,11 +72,16 @@ func run(crawl bool, silent bool) {
 
 	}
 
+	for _, crawledUrl = range crawledUrls {
+		crawls <- crawledUrl
+	}
+
 	uscanner := bufio.NewScanner(os.Stdin)
 	for uscanner.Scan() {
 		urls <- uscanner.Text()
 	}
 
+	close(crawls)
 	close(urls)
 	wg.Wait()
 }
@@ -94,7 +106,7 @@ func Crawl(c *colly.Collector, wg *sync.WaitGroup, url string, payload string, s
 			if !silent {
 				gologger.Debug().Msg("Crawled " + r.URL.String())
 			}
-			traversal.TestTraversal(wg, r.URL.String(), payload, silent)
+			crawledUrls = append(crawledUrls, r.URL.String())
 
 		} else {
 			if args.Regex != "" {
@@ -102,7 +114,7 @@ func Crawl(c *colly.Collector, wg *sync.WaitGroup, url string, payload string, s
 					if !silent {
 						gologger.Debug().Msg("Crawled " + r.URL.String())
 					}
-					traversal.TestTraversal(wg, r.URL.String(), payload, silent)
+					crawledUrls = append(crawledUrls, r.URL.String())
 				}
 
 			} else if args.Scope != "" {
@@ -110,18 +122,20 @@ func Crawl(c *colly.Collector, wg *sync.WaitGroup, url string, payload string, s
 					if !silent {
 						gologger.Debug().Msg("Crawled " + r.URL.String())
 					}
-					traversal.TestTraversal(wg, r.URL.String(), payload, silent)
+					crawledUrls = append(crawledUrls, r.URL.String())
 				}
 
 			} else {
 				if !silent {
 					gologger.Debug().Msg("Crawled " + r.URL.String())
 				}
-				traversal.TestTraversal(wg, r.URL.String(), payload, silent)
+				crawledUrls = append(crawledUrls, r.URL.String())
 			}
 
 		}
 
 	})
 	c.Visit(url)
+	// Wait until threads are finished
+	c.Wait()
 }
