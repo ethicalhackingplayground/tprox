@@ -56,9 +56,9 @@ func run(crawl bool, silent bool) {
 			for url := range urls {
 				for _, p := range Payloads {
 					if crawl {
-						Crawl(c, &wg, url, p, silent)
-						for _, crawl := range crawls {
-							traversal.TestTraversal(wg, crawl, payload, silent)
+						Crawl(c, url, silent)
+						for urlCrawled := range crawls {
+							traversal.TestTraversal(wg, urlCrawled, p, silent)
 						}
 
 					} else {
@@ -72,7 +72,7 @@ func run(crawl bool, silent bool) {
 
 	}
 
-	for _, crawledUrl = range crawledUrls {
+	for _, crawledUrl := range crawledUrls {
 		crawls <- crawledUrl
 	}
 
@@ -87,7 +87,7 @@ func run(crawl bool, silent bool) {
 }
 
 // Crawl the host
-func Crawl(c *colly.Collector, wg *sync.WaitGroup, url string, payload string, silent bool) {
+func Crawl(c *colly.Collector, url string, silent bool) {
 
 	// Find and visit all links
 	c.OnHTML("a[href]", func(e *colly.HTMLElement) {
