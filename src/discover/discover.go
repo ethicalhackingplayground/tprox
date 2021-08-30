@@ -31,15 +31,18 @@ func BruteForDirAndFile(client http.Client, wg *sync.WaitGroup, url string, test
 	if resp1.StatusCode == 200 {
 		if resp2.StatusCode == 404 || resp2.StatusCode == 403 || resp2.StatusCode == 401 || resp2.StatusCode == 400 {
 			if args.Output != "" {
-				err := os.WriteFile(args.Output, []byte(contentFound), 0644)
-				if err != nil {
-					return
-				}
+
 				f, err := os.Create(args.Output)
 				if err != nil {
 					return
 				}
 				defer f.Close()
+
+				_, err2 := f.WriteString(contentFound)
+
+				if err2 != nil {
+					return
+				}
 			}
 
 			fmt.Println("")
