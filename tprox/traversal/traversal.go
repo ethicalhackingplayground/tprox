@@ -73,7 +73,7 @@ func TestTraversal(wg *sync.WaitGroup, url string, payload string, silent bool) 
 			white := color.New(color.FgWhite, color.Bold).SprintFunc()
 			blue := color.New(color.FgBlue, color.Bold).SprintFunc()
 
-			fmt.Printf("%s%s%s %s\n", white("["), blue("Proxy"), white("]"), white(testUrl))
+			fmt.Printf("\n%s%s%s %s", white("["), blue("Proxy"), white("]"), white(testUrl))
 
 			// Start bruteforcing for files and directories
 			words := make(chan string)
