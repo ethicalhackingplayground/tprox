@@ -36,7 +36,16 @@ func run(crawl bool, silent bool) {
 	// Create a new crolly collector
 	c := colly.NewCollector(
 		colly.MaxDepth(args.Depth),
+		colly.Async(true),
 	)
+
+	// Limit the maximum parallelism to 2
+	// This is necessary if the goroutines are dynamically
+	// created to control the limit of simultaneous requests.
+	//
+	// Parallelism can be controlled also by spawning fixed
+	// number of go routines.
+	c.Limit(&colly.LimitRule{DomainGlob: "*", Parallelism: 2})
 
 	var wg sync.WaitGroup
 	for i := 0; i < args.Threads; i++ {
@@ -68,14 +77,13 @@ func run(crawl bool, silent bool) {
 	for _, crawledUrl := range crawledUrls {
 		links <- crawledUrl
 	}
-
+	close(links)
 	uscanner := bufio.NewScanner(os.Stdin)
 	for uscanner.Scan() {
 		urls <- uscanner.Text()
 	}
 
 	close(urls)
-	close(links)
 	wg.Wait()
 }
 
@@ -120,4 +128,6 @@ func Crawl(c *colly.Collector, url string, silent bool) {
 
 	})
 	c.Visit(url)
+	// Wait until threads are finished
+	c.Wait()
 }
