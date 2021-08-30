@@ -2,14 +2,14 @@ package traversal
 
 import (
 	"bufio"
+	"fmt"
+	"github.com/ethicalhackingplayground/tprox/tprox/args"
+	"github.com/ethicalhackingplayground/tprox/tprox/discover"
+	"github.com/projectdiscovery/gologger"
 	"net/http"
 	"os"
 	"strings"
 	"sync"
-
-	"github.com/ethicalhackingplayground/tprox/tprox/args"
-	"github.com/ethicalhackingplayground/tprox/tprox/discover"
-	"github.com/projectdiscovery/gologger"
 )
 
 // Craft the new url to test, this works as the following.
