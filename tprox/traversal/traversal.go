@@ -2,7 +2,6 @@ package traversal
 
 import (
 	"bufio"
-	"fmt"
 	"github.com/ethicalhackingplayground/tprox/tprox/args"
 	"github.com/ethicalhackingplayground/tprox/tprox/discover"
 	"github.com/fatih/color"
