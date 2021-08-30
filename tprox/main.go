@@ -120,4 +120,6 @@ func Crawl(c *colly.Collector, wg *sync.WaitGroup, url string, payload string, s
 
 	})
 	c.Visit(url)
+	// Wait until threads are finished
+	c.Wait()
 }
