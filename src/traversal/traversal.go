@@ -82,7 +82,7 @@ func TestTraversal(wg *sync.WaitGroup, url string, payload string, silent bool) 
 
 					// wordlist brute channel loop
 					for word := range words {
-						discover.BruteForDirAndFile(client, wg, url, testUrl, word)
+						discover.BruteForDirAndFile(client, wg, url, testUrl, word, silent)
 					}
 				}()
 				wg.Done()

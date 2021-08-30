@@ -17,7 +17,7 @@
 ### Install
 
 ```sh
-▶  GO111MODULE=off go get -v -u github.com/ethicalhackingplayground/tprox/src
+▶  GO111MODULE=on go get -v -u github.com/ethicalhackingplayground/tprox/src
 ```
 
 ### Usage
@@ -51,25 +51,17 @@ Usage of ./tprox:
 
 ### Examples
 
-Finding Path Traversal Files/Directories
-
 ```sh
 ▶ echo "https://example.com/api/v1" | tprox -w wordlist
 ```
-
-Finding Path Traversal Files/Directories Through Crawling
 
 ```sh
 ▶ echo "https://example.com/api/v1" | tprox -w wordlist -c
 ```
 
-Finding Path Traversal Files/Directories Through Crawling And Grepping
-
 ```sh
 ▶ echo "https://example.com/api/v1" | tprox -w wordlist -c -r "/api/"
 ```
-
-Another alternitive to `echo` would be to cat out a list of resolved hosts
 
 ```sh
 ▶ cat urls.txt | tprox -w wordlist
