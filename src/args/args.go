@@ -58,7 +58,7 @@ func ParseArgs() (bool, bool, bool) {
 	flag.StringVar(&Output, "o", "", "Output the results to a file")
 	flag.StringVar(&Regex, "r", "", "Filter crawl with regex pattern")
 	Crawl := flag.Bool("c", false, "crawl the resolved domain while testing for proxy misconfigs")
-	Verbose := flag.Bool("c", true, "crawl the resolved domain while testing for proxy misconfigs")
+	Verbose := flag.Bool("v", true, "Show verbose output")
 	flag.IntVar(&Depth, "d", 5, "The crawl depth")
 	flag.IntVar(&Threads, "t", 10, "The number of concurrent requests")
 	flag.Parse()
