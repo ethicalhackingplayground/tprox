@@ -70,7 +70,6 @@ func TestTraversal(wg *sync.WaitGroup, url string, payload string, silent bool) 
 
 		if resp.StatusCode == 404 {
 
-			info := color.New(color.FgWhite, color.Bold).SprintFunc()
 			white := color.New(color.FgWhite, color.Bold).SprintFunc()
 			blue := color.New(color.FgBlue, color.Bold).SprintFunc()
 
