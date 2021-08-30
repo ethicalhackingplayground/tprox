@@ -2,11 +2,12 @@ package traversal
 
 import (
 	"bufio"
-	"fmt"
 	"net/http"
 	"os"
 	"strings"
 	"sync"
+
+	"github.com/projectdiscovery/gologger"
 )
 
 // The payloads to test
@@ -69,7 +70,7 @@ func testTraversal(wg *sync.WaitGroup, url string, payload string) {
 		}
 
 		if resp.StatusCode == 404 {
-			fmt.Println("[-] Brutforcing proxy " + testUrl)
+			gologger.Info().Msg("[-] Brutforcing proxy " + testUrl)
 
 			// Start bruteforcing for files and directories
 			words := make(chan string)

@@ -5,13 +5,15 @@ import (
 	"fmt"
 	"os"
 	"sync"
+
+	"github.com/projectdiscovery/gologger"
 )
 
 // Parse the arguments and run the test function.
 func main() {
 
 	if args.parseArgs() {
-		fmt.Println("[>] Finding misconfigured proxies ")
+		gologger.Debug().Msg("[>] Finding misconfigured proxies ")
 		fmt.Println("")
 		run()
 	}

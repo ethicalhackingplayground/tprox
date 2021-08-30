@@ -2,7 +2,9 @@ package args
 
 import (
 	"flag"
-	"fmt"
+
+	"github.com/projectdiscovery/gologger"
+	"github.com/projectdiscovery/gologger/levels"
 )
 
 // Our global variables
@@ -12,9 +14,9 @@ var (
 	threads  int
 )
 
-func getBanner() string {
+func printBanner() {
 
-	str := `
+	banner := `
 
  
   __                   
@@ -27,14 +29,21 @@ func getBanner() string {
 
 	`
 
-	return str
+	gologger.DefaultLogger.SetMaxLevel(levels.LevelDebug)
+
+	gologger.Print().Msgf("%s\n", banner)
+	gologger.Print().Msg("\t\tgithub.com/ethicalhackingplayground\n\n")
+
+	gologger.Info().Msg("Use with caution. You are responsible for your actions\n")
+	gologger.Info().Msg("Developers assume no liability and are not responsible for any misuse or damage.\n\n")
+
 }
 
 // Return a true or false if the args are valid.
 func parseArgs() bool {
 
 	// Print the banner
-	fmt.Println(getBanner())
+	printBanner()
 
 	flag.StringVar(&wordlist, "w", "", "The wordlist to use against a valid endpoint to traverse")
 	flag.StringVar(&wordlist, "o", "", "Output the results to a file")
