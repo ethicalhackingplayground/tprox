@@ -2,10 +2,13 @@ package traversal
 
 import (
 	"bufio"
+	"bytes"
 	"fmt"
 	"github.com/ethicalhackingplayground/tprox/tprox/args"
 	"github.com/ethicalhackingplayground/tprox/tprox/discover"
 	"github.com/fatih/color"
+	"github.com/schollz/progressbar/v3"
+	"io"
 	"net/http"
 	"os"
 	"strings"
@@ -74,7 +77,9 @@ func TestTraversal(wg *sync.WaitGroup, url string, payload string, silent bool) 
 			white := color.New(color.FgWhite, color.Bold).SprintFunc()
 			blue := color.New(color.FgBlue, color.Bold).SprintFunc()
 
-			fmt.Printf("%s%s%s %s\n", white("["), blue("Proxy"), white("]"), white(testUrl))
+			if !silent {
+				fmt.Printf("%s%s%s %s\n", white("["), blue("Proxy"), white("]"), white(testUrl))
+			}
 
 			// Start bruteforcing for files and directories
 			words := make(chan string)
@@ -85,6 +90,11 @@ func TestTraversal(wg *sync.WaitGroup, url string, payload string, silent bool) 
 				return
 			}
 			wordBytes := bufio.NewScanner(wordFile)
+			count, err := lineCounter(wordFile)
+			if err != nil {
+				return
+			}
+			bar := progressbar.Default(100)
 			for i := 0; i < args.Threads; i++ {
 				wg.Add(1)
 				go func() {
@@ -92,6 +102,7 @@ func TestTraversal(wg *sync.WaitGroup, url string, payload string, silent bool) 
 					// wordlist brute channel loop
 					for word := range words {
 						discover.BruteForDirAndFile(client, wg, url, testUrl, word, silent)
+						bar.Add(1)
 					}
 					time.Sleep(40 * time.Millisecond)
 
@@ -105,6 +116,25 @@ func TestTraversal(wg *sync.WaitGroup, url string, payload string, silent bool) 
 			}
 			close(words)
 
+		}
+	}
+}
+
+func lineCounter(r io.Reader) (int, error) {
+	buf := make([]byte, 32*1024)
+	count := 0
+	lineSep := []byte{'\n'}
+
+	for {
+		c, err := r.Read(buf)
+		count += bytes.Count(buf[:c], lineSep)
+
+		switch {
+		case err == io.EOF:
+			return count, nil
+
+		case err != nil:
+			return count, err
 		}
 	}
 }
