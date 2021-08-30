@@ -7,8 +7,6 @@ import (
 	"github.com/ethicalhackingplayground/tprox/tprox/args"
 	"github.com/ethicalhackingplayground/tprox/tprox/discover"
 	"github.com/fatih/color"
-	"github.com/projectdiscovery/gologger"
-	"github.com/schollz/progressbar/v3"
 	"io"
 	"net/http"
 	"os"
@@ -91,12 +89,6 @@ func TestTraversal(wg *sync.WaitGroup, url string, payload string, silent bool) 
 				return
 			}
 			wordBytes := bufio.NewScanner(wordFile)
-			count, err := lineCounter(wordFile)
-			if err != nil {
-				gologger.Error().Msg(err.Error())
-				return
-			}
-			bar := progressbar.Default(int64(count))
 			for i := 0; i < args.Threads; i++ {
 				wg.Add(1)
 				go func() {
@@ -104,7 +96,6 @@ func TestTraversal(wg *sync.WaitGroup, url string, payload string, silent bool) 
 					// wordlist brute channel loop
 					for word := range words {
 						discover.BruteForDirAndFile(client, wg, url, testUrl, word, silent)
-						bar.Add(1)
 					}
 					time.Sleep(40 * time.Millisecond)
 
@@ -118,25 +109,6 @@ func TestTraversal(wg *sync.WaitGroup, url string, payload string, silent bool) 
 			}
 			close(words)
 
-		}
-	}
-}
-
-func lineCounter(r io.Reader) (int, error) {
-	buf := make([]byte, 32*1024)
-	count := 0
-	lineSep := []byte{'\n'}
-
-	for {
-		c, err := r.Read(buf)
-		count += bytes.Count(buf[:c], lineSep)
-
-		switch {
-		case err == io.EOF:
-			return count, nil
-
-		case err != nil:
-			return count, err
 		}
 	}
 }
