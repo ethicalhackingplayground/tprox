@@ -12,7 +12,7 @@ import (
 )
 
 // The payloads to test
-var Payloads = [3]string{"..%2f", "..;/", "../"}
+var Payloads = [3]string{"..%2f", "..;/", "%2e%2e%2f"}
 
 // Parse the arguments and run the test function.
 func main() {
@@ -79,6 +79,7 @@ func Crawl(c *colly.Collector, wg *sync.WaitGroup, url string, payload string, s
 
 		match, _ := regexp.MatchString(args.Regex, r.URL.String())
 		inScope, _ := regexp.MatchString(args.Scope, r.URL.String())
+
 		if args.Regex != "" && args.Scope != "" && match && inScope {
 
 			if !silent {
