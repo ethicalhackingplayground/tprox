@@ -2,12 +2,11 @@ package discover
 
 import (
 	"fmt"
+	"github.com/ethicalhackingplayground/tprox/tprox/args"
+	"github.com/fatih/color"
 	"net/http"
 	"os"
 	"sync"
-
-	"github.com/ethicalhackingplayground/tprox/tprox/args"
-	"github.com/fatih/color"
 )
 
 // Start the content discovery for files and directories
@@ -45,7 +44,8 @@ func BruteForDirAndFile(client http.Client, wg *sync.WaitGroup, url string, test
 				}
 			}
 
-			fmt.Fprintf(color.Output, "\n%s%s%s %s\n", white("["), green("FOUND"), white("]"), info(contentFound))
+			fmt.Printf("\n\n%s%s%s %s\n\n", white("["), green("FOUND"), white("]"), info(contentFound))
+			defer color.Unset() // Use it in your function
 		}
 
 	}
