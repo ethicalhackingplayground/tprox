@@ -1,4 +1,4 @@
-module github.com/ethicalhackingplayground/trpox/tprox
+module github.com/ethicalhackingplayground/tprox/tprox
 
 go 1.16
 
