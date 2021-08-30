@@ -31,7 +31,7 @@
 ### Usage
 
 ```sh
-tprox -h
+▶ tprox -h
 ```
 
 ```sh
