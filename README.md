@@ -67,6 +67,8 @@ Usage of ./tprox:
 ▶ cat urls.txt | tprox -w wordlist
 ```
 
+[![asciicast](https://asciinema.org/a/LP1FNuTcR7f40wpREFdOR9ilP.svg)](https://asciinema.org/a/LP1FNuTcR7f40wpREFdOR9ilP)
+
 ### License
 
 Tprox is distributed under [MIT License](https://github.com/ethicalhackingplayground/tprox/blob/main/LICENSE)
