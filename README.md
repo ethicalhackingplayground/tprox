@@ -17,7 +17,7 @@
 ### Install
 
 ```sh
-▶  GO111MODULE=off go get -v -u github.com/ethicalhackingplayground/tprox/src
+▶  GO111MODULE=on go get -v  github.com/ethicalhackingplayground/tprox/tprox
 ```
 
 ### Usage
