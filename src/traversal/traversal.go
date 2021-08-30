@@ -7,20 +7,16 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/projectdiscovery/gologger"
 	"github.com/ethicalhackingplayground/tprox/src/args"
 	"github.com/ethicalhackingplayground/tprox/src/discover"
+	"github.com/projectdiscovery/gologger"
 )
-)
-
-// The payloads to test
-var payloads = [3]string{"..%2f", "..;/", "../"}
 
 // Craft the new url to test, this works as the following.
 // 1.) Input the Url to test
 // 2.) Calculate the number of paths
 // 3.) Append the payload the same number of times as the paths
-func craftTestUrl(count int, url string, payload string) string {
+func CraftTestUrl(count int, url string, payload string) string {
 	var traversal = ""
 	for i := 0; i < count; i++ {
 		traversal = traversal + payload
@@ -31,14 +27,14 @@ func craftTestUrl(count int, url string, payload string) string {
 }
 
 // Test for proxy traversal attacks
-func testTraversal(wg *sync.WaitGroup, url string, payload string) {
+func TestTraversal(wg *sync.WaitGroup, url string, payload string) {
 
 	client := http.Client{}
 
 	// Get the test url
 	paths := strings.Split(url, "/")
 	pathCount := len(paths) - 2
-	testUrl := craftTestUrl(pathCount, url, payload)
+	testUrl := CraftTestUrl(pathCount, url, payload)
 
 	// Get the response from the server to
 	// Perform ongoing testing for proxy misconfigs
@@ -59,7 +55,7 @@ func testTraversal(wg *sync.WaitGroup, url string, payload string) {
 		// Get the test url
 		paths := strings.Split(url, "/")
 		pathCount := len(paths) - 3
-		testUrl := craftTestUrl(pathCount, url, payload)
+		testUrl := CraftTestUrl(pathCount, url, payload)
 
 		// Get the response from the server to
 		// Perform ongoing testing for proxy misconfigs
@@ -78,20 +74,20 @@ func testTraversal(wg *sync.WaitGroup, url string, payload string) {
 			// Start bruteforcing for files and directories
 			words := make(chan string)
 
-			for i := 0; i < args.threads; i++ {
+			for i := 0; i < args.Threads; i++ {
 				wg.Add(1)
 				go func() {
 
 					// wordlist brute channel loop
 					for word := range words {
-						discover.bruteForDirAndFile(client, wg, url, testUrl, word)
+						discover.BruteForDirAndFile(client, wg, url, testUrl, word)
 					}
 				}()
 				wg.Done()
 			}
 
 			// Read in the wordlist list
-			wordFile, err := os.Open(args.wordlist)
+			wordFile, err := os.Open(args.Wordlist)
 			if err != nil {
 				return
 			}

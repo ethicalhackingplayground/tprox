@@ -6,14 +6,18 @@ import (
 	"os"
 	"sync"
 
-	"github.com/projectdiscovery/gologger"
 	"github.com/ethicalhackingplayground/tprox/src/args"
+	"github.com/ethicalhackingplayground/tprox/src/traversal"
+	"github.com/projectdiscovery/gologger"
 )
+
+// The payloads to test
+var Payloads = [3]string{"..%2f", "..;/", "../"}
 
 // Parse the arguments and run the test function.
 func main() {
 
-	if args.parseArgs() {
+	if args.ParseArgs() {
 		gologger.Debug().Msg("[>] Finding misconfigured proxies ")
 		fmt.Println("")
 		run()
@@ -26,13 +30,13 @@ func run() {
 	urls := make(chan string)
 
 	var wg sync.WaitGroup
-	for i := 0; i < args.threads; i++ {
+	for i := 0; i < args.Threads; i++ {
 		wg.Add(1)
 		go func() {
 			// Url channel loop
 			for url := range urls {
-				for _, traversal := range args.payloads {
-					traversal.testTraversal(&wg, url, traversal)
+				for _, p := range Payloads {
+					traversal.TestTraversal(&wg, url, p)
 				}
 
 			}
