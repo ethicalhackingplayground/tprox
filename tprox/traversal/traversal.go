@@ -2,15 +2,18 @@ package traversal
 
 import (
 	"bufio"
+	"bytes"
 	"fmt"
 	"github.com/ethicalhackingplayground/tprox/tprox/args"
 	"github.com/ethicalhackingplayground/tprox/tprox/discover"
 	"github.com/fatih/color"
 	"github.com/schollz/progressbar/v3"
+	"io"
 	"net/http"
 	"os"
 	"strings"
 	"sync"
+	"time"
 )
 
 // Craft the new url to test, this works as the following.
@@ -91,7 +94,7 @@ func TestTraversal(wg *sync.WaitGroup, url string, payload string, silent bool) 
 			if err != nil {
 				return
 			}
-			bar := progressbar.Default(count)
+			bar := progressbar.Default(int64(count))
 			for i := 0; i < args.Threads; i++ {
 				wg.Add(1)
 				bar.Add(1)
