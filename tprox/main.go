@@ -57,6 +57,9 @@ func run(crawl bool, silent bool) {
 					if crawl {
 						Crawl(c, url, silent)
 						for _, crawledUrl := range crawledUrls {
+							if !silent {
+								gologger.Debug().Msg("Crawled " + crawledUrl)
+							}
 							traversal.TestTraversal(&wg, crawledUrl, p, silent)
 						}
 
@@ -97,32 +100,23 @@ func Crawl(c *colly.Collector, url string, silent bool) {
 
 		if args.Regex != "" && args.Scope != "" && match && inScope {
 
-			if !silent {
-				gologger.Debug().Msg("Crawled " + r.URL.String())
-			}
 			crawledUrls = append(crawledUrls, r.URL.String())
 
 		} else {
 			if args.Regex != "" {
 				if match {
-					if !silent {
-						gologger.Debug().Msg("Crawled " + r.URL.String())
-					}
+
 					crawledUrls = append(crawledUrls, r.URL.String())
 				}
 
 			} else if args.Scope != "" {
 				if inScope {
-					if !silent {
-						gologger.Debug().Msg("Crawled " + r.URL.String())
-					}
+
 					crawledUrls = append(crawledUrls, r.URL.String())
 				}
 
 			} else {
-				if !silent {
-					gologger.Debug().Msg("Crawled " + r.URL.String())
-				}
+
 				crawledUrls = append(crawledUrls, r.URL.String())
 			}
 
