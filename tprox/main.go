@@ -79,33 +79,32 @@ func Crawl(c *colly.Collector, wg *sync.WaitGroup, url string, payload string, s
 	// The request of each link visisted
 	c.OnRequest(func(r *colly.Request) {
 
-		url := r.URL.String()
-		match, _ := regexp.MatchString(args.Regex, url)
-		inScope, _ := regexp.MatchString(args.Scope, url)
+		match, _ := regexp.MatchString(args.Regex, r.URL.String())
+		inScope, _ := regexp.MatchString(args.Scope, r.URL.String())
 		if args.Regex != "" && args.Scope != "" && match && inScope {
 
 			if !silent {
-				gologger.Debug().Msg("Crawled " + url)
+				gologger.Debug().Msg("Crawled " + r.URL.String())
 			}
-			traversal.TestTraversal(wg, url, payload, silent)
+			traversal.TestTraversal(wg, r.URL.String(), payload, silent)
 
 		} else {
 			if args.Regex != "" && match {
 				if !silent {
-					gologger.Debug().Msg("Crawled " + url)
+					gologger.Debug().Msg("Crawled " + r.URL.String())
 				}
-				traversal.TestTraversal(wg, url, payload, silent)
+				traversal.TestTraversal(wg, r.URL.String(), payload, silent)
 
 			} else if args.Scope != "" && inScope {
 				if !silent {
-					gologger.Debug().Msg("Crawled " + url)
+					gologger.Debug().Msg("Crawled " + r.URL.String())
 				}
-				traversal.TestTraversal(wg, url, payload, silent)
+				traversal.TestTraversal(wg, r.URL.String(), payload, silent)
 			} else {
 				if !silent {
-					gologger.Debug().Msg("Crawled " + url)
+					gologger.Debug().Msg("Crawled " + r.URL.String())
 				}
-				traversal.TestTraversal(wg, url, payload, silent)
+				traversal.TestTraversal(wg, r.URL.String(), payload, silent)
 			}
 
 		}
