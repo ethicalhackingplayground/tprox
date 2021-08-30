@@ -56,11 +56,11 @@ Usage of ./tprox:
 ```
 
 ```sh
-▶ echo "https://example.com/api/v1" | tprox -w wordlist -c
+▶ echo "https://example.com" | tprox -w wordlist -c
 ```
 
 ```sh
-▶ echo "https://example.com/api/v1" | tprox -w wordlist -c -r "/api/"
+▶ echo "https://example.com" | tprox -w wordlist -c -r "/api/"
 ```
 
 ```sh
