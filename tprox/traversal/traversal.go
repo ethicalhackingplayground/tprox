@@ -2,10 +2,8 @@ package traversal
 
 import (
 	"bufio"
-	"fmt"
 	"github.com/ethicalhackingplayground/tprox/tprox/args"
 	"github.com/ethicalhackingplayground/tprox/tprox/discover"
-	"github.com/fatih/color"
 	"net/http"
 	"os"
 	"strings"
@@ -69,9 +67,6 @@ func TestTraversal(wg *sync.WaitGroup, url string, payload string, silent bool) 
 		}
 
 		if resp.StatusCode == 404 {
-			blue := color.New(color.FgBlue, color.Bold).SprintFunc()
-			white := color.New(color.FgWhite, color.Bold).SprintFunc()
-			fmt.Printf("%s%s%s %s ", white("["), blue("Proxy"), white("]"), white("Proxy, Bruteforcing..."))
 
 			// Start bruteforcing for files and directories
 			words := make(chan string)
