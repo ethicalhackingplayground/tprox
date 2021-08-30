@@ -9,9 +9,9 @@ import (
 
 // Our global variables
 var (
-	wordlist string
-	output   string
-	threads  int
+	Wordlist string
+	Output   string
+	Threads  int
 )
 
 func printBanner() {
@@ -24,8 +24,6 @@ func printBanner() {
 / __/ _ \/ __/ _ \\ \ /
 \__/ .__/_/  \___/_\_\   v0.1-dev
    /_/                  
-   
-   github.com/ethicalhackingplayground
 
 	`
 
@@ -40,16 +38,16 @@ func printBanner() {
 }
 
 // Return a true or false if the args are valid.
-func parseArgs() bool {
+func ParseArgs() bool {
 
 	// Print the banner
 	printBanner()
 
-	flag.StringVar(&wordlist, "w", "", "The wordlist to use against a valid endpoint to traverse")
-	flag.StringVar(&wordlist, "o", "", "Output the results to a file")
-	flag.IntVar(&threads, "t", 10, "The number of concurrent requests")
+	flag.StringVar(&Wordlist, "w", "", "The wordlist to use against a valid endpoint to traverse")
+	flag.StringVar(&Output, "o", "", "Output the results to a file")
+	flag.IntVar(&Threads, "t", 10, "The number of concurrent requests")
 	flag.Parse()
-	if wordlist == "" {
+	if Wordlist == "" {
 		flag.PrintDefaults()
 		return false
 	} else {
