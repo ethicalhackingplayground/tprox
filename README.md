@@ -29,7 +29,7 @@ tprox -h
 This will display help for the tool. Here are all the switches it supports.
 
 <details>
-<summary> 👉 gocrawler help menu 👈</summary>
+<summary> 👉 tprox help menu 👈</summary>
 
 ```
 Usage of ./tprox:
@@ -40,6 +40,7 @@ Usage of ./tprox:
         Output the results to a file
   -r string
         Filter crawl with regex pattern
+  -s    Show Silent output
   -t int
         The number of concurrent requests (default 10)
   -w string
