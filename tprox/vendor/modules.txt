@@ -1,22 +1,16 @@
 # github.com/PuerkitoBio/goquery v1.7.1
-## explicit
 github.com/PuerkitoBio/goquery
 # github.com/andybalholm/cascadia v1.2.0
 github.com/andybalholm/cascadia
 # github.com/antchfx/htmlquery v1.2.3
-## explicit
 github.com/antchfx/htmlquery
 # github.com/antchfx/xmlquery v1.3.6
-## explicit
 github.com/antchfx/xmlquery
 # github.com/antchfx/xpath v1.2.0
-## explicit
 github.com/antchfx/xpath
 # github.com/fatih/color v1.12.0
-## explicit
 github.com/fatih/color
 # github.com/gobwas/glob v0.2.3
-## explicit
 github.com/gobwas/glob
 github.com/gobwas/glob/compiler
 github.com/gobwas/glob/match
@@ -26,57 +20,45 @@ github.com/gobwas/glob/syntax/lexer
 github.com/gobwas/glob/util/runes
 github.com/gobwas/glob/util/strings
 # github.com/gocolly/colly v1.2.0
-## explicit
 github.com/gocolly/colly
 github.com/gocolly/colly/debug
 github.com/gocolly/colly/storage
 # github.com/golang/groupcache v0.0.0-20210331224755-41bb18bfe9da
-## explicit
 github.com/golang/groupcache/lru
 # github.com/golang/protobuf v1.5.2
-## explicit
 github.com/golang/protobuf/proto
 # github.com/json-iterator/go v1.1.11
-## explicit
 github.com/json-iterator/go
 # github.com/kennygrant/sanitize v1.2.4
-## explicit
 github.com/kennygrant/sanitize
 # github.com/logrusorgru/aurora v2.0.3+incompatible
 github.com/logrusorgru/aurora
 # github.com/mattn/go-colorable v0.1.8
 github.com/mattn/go-colorable
 # github.com/mattn/go-isatty v0.0.13
-## explicit
 github.com/mattn/go-isatty
 # github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd
 github.com/modern-go/concurrent
 # github.com/modern-go/reflect2 v1.0.1
 github.com/modern-go/reflect2
 # github.com/projectdiscovery/gologger v1.1.4
-## explicit
 github.com/projectdiscovery/gologger
 github.com/projectdiscovery/gologger/formatter
 github.com/projectdiscovery/gologger/levels
 github.com/projectdiscovery/gologger/writer
 # github.com/saintfish/chardet v0.0.0-20120816061221-3af4cd4741ca
-## explicit
 github.com/saintfish/chardet
 # github.com/temoto/robotstxt v1.1.2
-## explicit
 github.com/temoto/robotstxt
 # golang.org/x/net v0.0.0-20210825183410-e898025ed96a
-## explicit
 golang.org/x/net/context
 golang.org/x/net/html
 golang.org/x/net/html/atom
 golang.org/x/net/html/charset
 # golang.org/x/sys v0.0.0-20210823070655-63515b42dcdf
-## explicit
 golang.org/x/sys/internal/unsafeheader
 golang.org/x/sys/unix
 # golang.org/x/text v0.3.7
-## explicit
 golang.org/x/text/encoding
 golang.org/x/text/encoding/charmap
 golang.org/x/text/encoding/htmlindex
@@ -95,7 +77,6 @@ golang.org/x/text/language
 golang.org/x/text/runes
 golang.org/x/text/transform
 # google.golang.org/appengine v1.6.7
-## explicit
 google.golang.org/appengine/internal
 google.golang.org/appengine/internal/base
 google.golang.org/appengine/internal/datastore
@@ -104,7 +85,6 @@ google.golang.org/appengine/internal/remote_api
 google.golang.org/appengine/internal/urlfetch
 google.golang.org/appengine/urlfetch
 # google.golang.org/protobuf v1.27.1
-## explicit
 google.golang.org/protobuf/encoding/prototext
 google.golang.org/protobuf/encoding/protowire
 google.golang.org/protobuf/internal/descfmt
