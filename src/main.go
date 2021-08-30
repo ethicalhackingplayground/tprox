@@ -7,6 +7,7 @@ import (
 	"sync"
 
 	"github.com/projectdiscovery/gologger"
+	"github.com/ethicalhackingplayground/tprox/src/args"
 )
 
 // Parse the arguments and run the test function.
