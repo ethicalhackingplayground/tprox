@@ -8,10 +8,11 @@ import (
 
 	"github.com/ethicalhackingplayground/tprox/src/args"
 	"github.com/fatih/color"
+	"github.com/projectdiscovery/gologger"
 )
 
 // Start the content discovery for files and directories
-func BruteForDirAndFile(client http.Client, wg *sync.WaitGroup, url string, testUrl string, word string) {
+func BruteForDirAndFile(client http.Client, wg *sync.WaitGroup, url string, testUrl string, word string, silent bool) {
 
 	info := color.New(color.FgWhite, color.Bold).SprintFunc()
 	white := color.New(color.FgWhite, color.Bold).SprintFunc()
@@ -22,6 +23,10 @@ func BruteForDirAndFile(client http.Client, wg *sync.WaitGroup, url string, test
 	resp1, err := http.Get(contentFound)
 	if err != nil {
 		return
+	}
+
+	if silent == false {
+		gologger.Debug().Msg(contentFound)
 	}
 
 	resp2, err := http.Get(contentNotFound)
@@ -38,7 +43,7 @@ func BruteForDirAndFile(client http.Client, wg *sync.WaitGroup, url string, test
 				}
 				defer f.Close()
 
-				_, err2 := f.WriteString(contentFound)
+				_, err2 := f.WriteString(contentFound + "\n")
 
 				if err2 != nil {
 					return
