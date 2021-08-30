@@ -78,49 +78,45 @@ func Crawl(c *colly.Collector, wg *sync.WaitGroup, url string, payload string, s
 	c.OnHTML("a[href]", func(e *colly.HTMLElement) {
 		link := e.Attr("href")
 		e.Request.Visit(e.Request.AbsoluteURL(link))
-	})
-
-	// The request of each link visisted
-	c.OnRequest(func(r *colly.Request) {
-
-		match, _ := regexp.MatchString(args.Regex, r.URL.String())
-		inScope, _ := regexp.MatchString(args.Scope, r.URL.String())
+		match, _ := regexp.MatchString(args.Regex, link))
+		inScope, _ := regexp.MatchString(args.Scope, link)
 
 		if args.Regex != "" && args.Scope != "" && match && inScope {
 
 			if !silent {
-				gologger.Debug().Msg("Crawled " + r.URL.String())
+				gologger.Debug().Msg("Crawled " + link)
 			}
-			traversal.TestTraversal(wg, r.URL.String(), payload, silent)
+			traversal.TestTraversal(wg, link, payload, silent)
 
 		} else {
 			if args.Regex != "" {
 				if match {
 					if !silent {
-						gologger.Debug().Msg("Crawled " + r.URL.String())
+						gologger.Debug().Msg("Crawled " + link)
 					}
-					traversal.TestTraversal(wg, r.URL.String(), payload, silent)
+					traversal.TestTraversal(wg, link, payload, silent)
 				}
 
 			} else if args.Scope != "" {
 				if inScope {
 					if !silent {
-						gologger.Debug().Msg("Crawled " + r.URL.String())
+						gologger.Debug().Msg("Crawled " + link)
 					}
-					traversal.TestTraversal(wg, r.URL.String(), payload, silent)
+					traversal.TestTraversal(wg, link, payload, silent)
 				}
 
 			} else {
 				if !silent {
 					gologger.Debug().Msg("Crawled " + r.URL.String())
 				}
-				traversal.TestTraversal(wg, r.URL.String(), payload, silent)
+				traversal.TestTraversal(wg, link, payload, silent)
+
 			}
 
 		}
-		// Wait until threads are finished
-		c.Wait()
-
 	})
+
 	c.Visit(url)
+	// Wait until threads are finished
+	c.Wait()
 }
