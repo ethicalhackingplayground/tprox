@@ -34,12 +34,7 @@ func run(crawl bool, silent bool) {
 	c := colly.NewCollector(
 		// Visit only these root domain
 		colly.AllowedDomains(args.Scope),
-		// Visit urls and that contain the following regex pattern
-		colly.URLFilters(
-			regexp.MustCompile(args.Regex),
-		),
 		colly.MaxDepth(args.Depth),
-		colly.Async(true),
 	)
 
 	var wg sync.WaitGroup
@@ -86,11 +81,21 @@ func Crawl(c *colly.Collector, wg *sync.WaitGroup, url string, payload string, s
 	c.OnRequest(func(r *colly.Request) {
 
 		url := r.URL.String()
+		if args.Regex != "" {
+			if regexp.MatchString(args.Regex, url) {
 
-		if !silent {
-			gologger.Debug().Msg("Crawled " + url)
+				if !silent {
+					gologger.Debug().Msg("Crawled " + url)
+				}
+				traversal.TestTraversal(wg, url, payload, silent)
+
+			}
+		} else {
+			if !silent {
+				gologger.Debug().Msg("Crawled " + url)
+			}
+			traversal.TestTraversal(wg, url, payload, silent)
 		}
-		traversal.TestTraversal(wg, url, payload, silent)
 
 	})
 	c.Visit(url)
