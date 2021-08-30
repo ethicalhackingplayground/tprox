@@ -8,7 +8,6 @@ import (
 
 	"github.com/ethicalhackingplayground/tprox/tprox/args"
 	"github.com/fatih/color"
-	"github.com/projectdiscovery/gologger"
 )
 
 // Start the content discovery for files and directories
@@ -23,10 +22,6 @@ func BruteForDirAndFile(client http.Client, wg *sync.WaitGroup, url string, test
 	resp1, err := http.Get(contentFound)
 	if err != nil {
 		return
-	}
-
-	if !silent {
-		gologger.Debug().Msg(contentFound)
 	}
 
 	resp2, err := http.Get(contentNotFound)
@@ -50,7 +45,6 @@ func BruteForDirAndFile(client http.Client, wg *sync.WaitGroup, url string, test
 				}
 			}
 
-			fmt.Println("")
 			fmt.Fprintf(color.Output, "\n%s%s%s %s\n", white("["), green("FOUND"), white("]"), info(contentFound))
 		}
 
