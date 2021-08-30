@@ -8,6 +8,7 @@ import (
 	"github.com/projectdiscovery/gologger"
 	"os"
 	"regexp"
+	"strings"
 	"sync"
 )
 
