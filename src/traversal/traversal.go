@@ -87,7 +87,7 @@ func testTraversal(wg *sync.WaitGroup, url string, payload string) {
 			}
 
 			// Read in the wordlist list
-			wordFile, err := os.Open(wordlist)
+			wordFile, err := os.Open(args.wordlist)
 			if err != nil {
 				return
 			}
