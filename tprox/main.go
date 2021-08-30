@@ -15,8 +15,6 @@ import (
 // The payloads to test
 var Payloads = [3]string{"..%2f", "..;/", "%2e%2e%2f"}
 
-var crawledUrls = []string{}
-
 // Parse the arguments and run the test function.
 func main() {
 	parsed, crawl, silent := args.ParseArgs()
@@ -31,21 +29,11 @@ func main() {
 func run(crawl bool, silent bool) {
 
 	urls := make(chan string)
-	links := make(chan string)
 
 	// Create a new crolly collector
 	c := colly.NewCollector(
 		colly.MaxDepth(args.Depth),
-		colly.Async(true),
 	)
-
-	// Limit the maximum parallelism to 2
-	// This is necessary if the goroutines are dynamically
-	// created to control the limit of simultaneous requests.
-	//
-	// Parallelism can be controlled also by spawning fixed
-	// number of go routines.
-	c.Limit(&colly.LimitRule{DomainGlob: "*", Parallelism: 2})
 
 	var wg sync.WaitGroup
 	for i := 0; i < args.Threads; i++ {
@@ -56,13 +44,7 @@ func run(crawl bool, silent bool) {
 			for url := range urls {
 				for _, p := range Payloads {
 					if crawl {
-						Crawl(links, c, url, silent)
-						for link := range links {
-							if !silent {
-								gologger.Debug().Msg("Crawled " + link)
-							}
-							traversal.TestTraversal(&wg, link, p, silent)
-						}
+						Crawl(c, &wg, url, p, silent)
 
 					} else {
 						traversal.TestTraversal(&wg, url, p, silent)
@@ -74,6 +56,7 @@ func run(crawl bool, silent bool) {
 		}()
 
 	}
+
 	uscanner := bufio.NewScanner(os.Stdin)
 	for uscanner.Scan() {
 		urls <- uscanner.Text()
@@ -84,7 +67,7 @@ func run(crawl bool, silent bool) {
 }
 
 // Crawl the host
-func Crawl(links chan string, c *colly.Collector, url string, silent bool) {
+func Crawl(c *colly.Collector, wg *sync.WaitGroup, url string, payload string, silent bool) {
 
 	// Find and visit all links
 	c.OnHTML("a[href]", func(e *colly.HTMLElement) {
@@ -100,30 +83,37 @@ func Crawl(links chan string, c *colly.Collector, url string, silent bool) {
 
 		if args.Regex != "" && args.Scope != "" && match && inScope {
 
-			links <- r.URL.String()
+			if !silent {
+				gologger.Debug().Msg("Crawled " + r.URL.String())
+			}
+			traversal.TestTraversal(wg, r.URL.String(), payload, silent)
 
 		} else {
 			if args.Regex != "" {
 				if match {
-
-					links <- r.URL.String()
+					if !silent {
+						gologger.Debug().Msg("Crawled " + r.URL.String())
+					}
+					traversal.TestTraversal(wg, r.URL.String(), payload, silent)
 				}
 
 			} else if args.Scope != "" {
 				if inScope {
-
-					links <- r.URL.String()
+					if !silent {
+						gologger.Debug().Msg("Crawled " + r.URL.String())
+					}
+					traversal.TestTraversal(wg, r.URL.String(), payload, silent)
 				}
 
 			} else {
-
-				links <- r.URL.String()
+				if !silent {
+					gologger.Debug().Msg("Crawled " + r.URL.String())
+				}
+				traversal.TestTraversal(wg, r.URL.String(), payload, silent)
 			}
 
 		}
 
 	})
 	c.Visit(url)
-	// Wait until threads are finished
-	c.Wait()
 }
