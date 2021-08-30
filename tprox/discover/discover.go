@@ -6,7 +6,7 @@ import (
 	"os"
 	"sync"
 
-	"github.com/ethicalhackingplayground/tprox/src/args"
+	"github.com/ethicalhackingplayground/tprox/tprox/args"
 	"github.com/fatih/color"
 	"github.com/projectdiscovery/gologger"
 )

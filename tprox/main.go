@@ -2,8 +2,8 @@ package main
 
 import (
 	"bufio"
-	"github.com/ethicalhackingplayground/tprox/src/args"
-	"github.com/ethicalhackingplayground/tprox/src/traversal"
+	"github.com/ethicalhackingplayground/tprox/tprox/args"
+	"github.com/ethicalhackingplayground/tprox/tprox/traversal"
 	"github.com/gocolly/colly"
 	"github.com/projectdiscovery/gologger"
 	"os"

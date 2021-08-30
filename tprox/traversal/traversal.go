@@ -7,8 +7,8 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/ethicalhackingplayground/tprox/src/args"
-	"github.com/ethicalhackingplayground/tprox/src/discover"
+	"github.com/ethicalhackingplayground/tprox/tprox/args"
+	"github.com/ethicalhackingplayground/tprox/tprox/discover"
 	"github.com/projectdiscovery/gologger"
 )
 
