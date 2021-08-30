@@ -31,6 +31,7 @@ func main() {
 func run(crawl bool, silent bool) {
 
 	urls := make(chan string)
+	links := make(chan string)
 
 	// Create a new crolly collector
 	c := colly.NewCollector(
@@ -56,11 +57,11 @@ func run(crawl bool, silent bool) {
 				for _, p := range Payloads {
 					if crawl {
 						Crawl(c, url, silent)
-						for _, crawledUrl := range crawledUrls {
+						for link := range links {
 							if !silent {
-								gologger.Debug().Msg("Crawled " + crawledUrl)
+								gologger.Debug().Msg("Crawled " + link)
 							}
-							traversal.TestTraversal(&wg, crawledUrl, p, silent)
+							traversal.TestTraversal(&wg, link, p, silent)
 						}
 
 					} else {
@@ -73,6 +74,9 @@ func run(crawl bool, silent bool) {
 		}()
 
 	}
+	for _, crawledUrl := range crawledUrls {
+		links <- crawledUrl
+	}
 
 	uscanner := bufio.NewScanner(os.Stdin)
 	for uscanner.Scan() {
@@ -80,6 +84,7 @@ func run(crawl bool, silent bool) {
 	}
 
 	close(urls)
+	close(links)
 	wg.Wait()
 }
 
