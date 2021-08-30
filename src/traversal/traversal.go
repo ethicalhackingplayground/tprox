@@ -69,7 +69,7 @@ func TestTraversal(wg *sync.WaitGroup, url string, payload string) {
 		}
 
 		if resp.StatusCode == 404 {
-			gologger.Info().Msg("[-] Brutforcing proxy " + testUrl)
+			gologger.Debug().Msg("[-] Found Proxy, Bruteforcing " + testUrl)
 
 			// Start bruteforcing for files and directories
 			words := make(chan string)

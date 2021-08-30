@@ -2,6 +2,9 @@ package args
 
 import (
 	"flag"
+	"math/rand"
+	"runtime"
+	"time"
 
 	"github.com/projectdiscovery/gologger"
 	"github.com/projectdiscovery/gologger/levels"
@@ -12,6 +15,9 @@ var (
 	Wordlist string
 	Output   string
 	Threads  int
+	Crawl    bool
+	Depth    int
+	Regex    string
 )
 
 func printBanner() {
@@ -38,19 +44,26 @@ func printBanner() {
 }
 
 // Return a true or false if the args are valid.
-func ParseArgs() bool {
+func ParseArgs() (bool, bool) {
 
 	// Print the banner
 	printBanner()
 
+	rand.Seed(time.Now().UnixNano())
+	nCPU := runtime.NumCPU()
+	runtime.GOMAXPROCS(nCPU)
+
 	flag.StringVar(&Wordlist, "w", "", "The wordlist to use against a valid endpoint to traverse")
 	flag.StringVar(&Output, "o", "", "Output the results to a file")
+	flag.StringVar(&Regex, "r", "", "Filter crawl with regex pattern")
+	Crawl := flag.Bool("c", false, "crawl the resolved domain while testing for proxy misconfigs")
+	flag.IntVar(&Depth, "d", 5, "The crawl depth")
 	flag.IntVar(&Threads, "t", 10, "The number of concurrent requests")
 	flag.Parse()
 	if Wordlist == "" {
 		flag.PrintDefaults()
-		return false
+		return false, *Crawl
 	} else {
-		return true
+		return true, *Crawl
 	}
 }
