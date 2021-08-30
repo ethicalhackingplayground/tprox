@@ -4,7 +4,7 @@ go 1.13
 
 require (
 	github.com/antchfx/xpath v1.2.0 // indirect
-	github.com/ethicalhackingplayground/tprox/src v0.0.0-20210830071711-f12f51ddcb9e
+	github.com/ethicalhackingplayground/tprox/tprox v0.0.0-20210830071711-f12f51ddcb9e
 	github.com/fatih/color v1.12.0
 	github.com/gocolly/colly v1.2.0
 	github.com/golang/groupcache v0.0.0-20210331224755-41bb18bfe9da // indirect
