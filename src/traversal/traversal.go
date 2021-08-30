@@ -84,8 +84,9 @@ func TestTraversal(wg *sync.WaitGroup, url string, payload string, silent bool) 
 					for word := range words {
 						discover.BruteForDirAndFile(client, wg, url, testUrl, word, silent)
 					}
+					wg.Done()
 				}()
-				wg.Done()
+
 			}
 
 			// Read in the wordlist list
