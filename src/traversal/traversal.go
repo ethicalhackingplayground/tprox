@@ -8,6 +8,9 @@ import (
 	"sync"
 
 	"github.com/projectdiscovery/gologger"
+	"github.com/ethicalhackingplayground/tprox/src/args"
+	"github.com/ethicalhackingplayground/tprox/src/discover"
+)
 )
 
 // The payloads to test
