@@ -50,10 +50,6 @@ func ParseArgs() (bool, bool, bool) {
 	// Print the banner
 	printBanner()
 
-	rand.Seed(time.Now().UnixNano())
-	nCPU := runtime.NumCPU()
-	runtime.GOMAXPROCS(nCPU)
-
 	flag.StringVar(&Wordlist, "w", "", "The wordlist to use against a valid endpoint to traverse")
 	flag.StringVar(&Output, "o", "", "Output the results to a file")
 	flag.StringVar(&Regex, "r", "", "Filter crawl with regex pattern")
@@ -62,6 +58,11 @@ func ParseArgs() (bool, bool, bool) {
 	flag.IntVar(&Depth, "d", 5, "The crawl depth")
 	flag.IntVar(&Threads, "t", 10, "The number of concurrent requests")
 	flag.Parse()
+
+	rand.Seed(time.Now().UnixNano())
+	nCPU := runtime.NumCPU()
+	runtime.GOMAXPROCS(nCPU)
+
 	if Wordlist == "" {
 		flag.PrintDefaults()
 		return false, *Crawl, *Silent

@@ -20,7 +20,7 @@ var Payloads = [3]string{"..%2f", "..;/", "../"}
 func main() {
 	parsed, crawl, silent := args.ParseArgs()
 	if parsed {
-		if silent == true {
+		if silent == false {
 			gologger.Debug().Msg("Finding misconfigured proxies ")
 			fmt.Println("")
 		}
@@ -78,6 +78,7 @@ func Crawl(c *colly.Collector, wg *sync.WaitGroup, url string, payload string, s
 
 	// The request of each link visisted
 	c.OnRequest(func(r *colly.Request) {
+		fmt.Println(r.URL.String())
 		matched, _ := regexp.MatchString(args.Regex, r.URL.String())
 		if args.Regex != "" {
 			if matched {
