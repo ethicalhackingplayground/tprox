@@ -33,6 +33,7 @@ func run(crawl bool, silent bool) {
 	// Create a new crolly collector
 	c := colly.NewCollector(
 		colly.MaxDepth(args.Depth),
+		colly.Async(true)
 	)
 
 	// Parallelism can be controlled also by spawning fixed
