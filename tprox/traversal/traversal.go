@@ -71,8 +71,8 @@ func TestTraversal(wg *sync.WaitGroup, url string, payload string, silent bool) 
 
 		if resp.StatusCode == 404 {
 
-			gologger.Info().Msg("Discovery Interesting Files/Dirs on " + testUrl)
-
+			gologger.Debug().Msg("Discovery Interesting Files/Dirs on " + testUrl)
+			fmt.Println("")
 			// Start bruteforcing for files and directories
 			words := make(chan string)
 
