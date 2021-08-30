@@ -14,10 +14,20 @@
 
 ---
 
-### Install
+### Install From Source
 
 ```sh
 ▶  GO111MODULE=on go get -v  github.com/ethicalhackingplayground/tprox/tprox
+```
+
+### Install With Docker
+
+```sh
+▶  git clone https://github.com/ethicalhackingplayground/tprox && cd tprox && docker build -t tprox .
+```
+
+```sh
+▶  docker run tprox -h
 ```
 
 ### Usage
