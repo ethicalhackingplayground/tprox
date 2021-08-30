@@ -36,10 +36,6 @@ func run(crawl bool, silent bool) {
 		colly.Async(true),
 	)
 
-	// Parallelism can be controlled also by spawning fixed
-	// number of go routines.
-	c.Limit(&colly.LimitRule{DomainGlob: args.Scope, Parallelism: args.Threads})
-
 	var wg sync.WaitGroup
 	for i := 0; i < args.Threads; i++ {
 		wg.Add(1)
@@ -121,6 +117,4 @@ func Crawl(c *colly.Collector, wg *sync.WaitGroup, url string, payload string, s
 
 	})
 	c.Visit(url)
-	// Wait until threads are finished
-	c.Wait()
 }
