@@ -1,6 +1,6 @@
 module github.com/ethicalhackingplayground/tprox/tprox
 
-go 1.16
+go 1.13
 
 require (
 	github.com/PuerkitoBio/goquery v1.7.1 // indirect

@@ -79,6 +79,18 @@ Usage of tprox:
 ▶ cat urls.txt | tprox -w wordlist
 ```
 
+### Known Fixes
+
+if for some reason the program fails to install or update run:
+
+```sh
+sudo rm -r /home/<user-name>/go/pkg/mod/github.com/ethicalhackingplayground/tprox
+go clean --modcache
+go clean
+```
+
+Then try and install it again.
+
 ### License
 
 Tprox is distributed under [MIT License](https://github.com/ethicalhackingplayground/tprox/blob/main/LICENSE)
@@ -86,3 +98,4 @@ Tprox is distributed under [MIT License](https://github.com/ethicalhackingplaygr
 <h1 align="left">
   <a href="https://discord.gg/MQWCem5b"><img src="static/Join-Discord.png" width="380" alt="Join Discord"></a>
 </h1>
+```
