@@ -107,7 +107,7 @@ func Crawl(c *colly.Collector, wg *sync.WaitGroup, url string, payload string, s
 
 			} else {
 				if !silent {
-					gologger.Debug().Msg("Crawled " + r.URL.String())
+					gologger.Debug().Msg("Crawled " + link)
 				}
 				traversal.TestTraversal(wg, link, payload, silent)
 
