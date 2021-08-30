@@ -33,7 +33,6 @@ func run(crawl bool, silent bool) {
 	// Create a new crolly collector
 	c := colly.NewCollector(
 		colly.MaxDepth(args.Depth),
-		colly.Async(true),
 	)
 
 	// Limit the maximum parallelism to 2
@@ -125,6 +124,4 @@ func Crawl(c *colly.Collector, wg *sync.WaitGroup, url string, payload string, s
 
 	})
 	c.Visit(url)
-	// Wait until threads are finished
-	c.Wait()
 }
