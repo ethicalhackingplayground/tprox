@@ -19,6 +19,7 @@ var (
 	Depth    int
 	Regex    string
 	Silent   bool
+	Scope    string
 )
 
 func printBanner() {
@@ -52,11 +53,12 @@ func ParseArgs() (bool, bool, bool) {
 
 	flag.StringVar(&Wordlist, "w", "", "The wordlist to use against a valid endpoint to traverse")
 	flag.StringVar(&Output, "o", "", "Output the results to a file")
-	flag.StringVar(&Regex, "r", "", "Filter crawl with regex pattern")
-	Crawl := flag.Bool("c", false, "crawl the resolved domain while testing for proxy misconfigs")
+	flag.StringVar(&Regex, "regex", "", "Filter crawl with regex pattern")
+	flag.StringVar(&Scope, "scope", "", "Specify a scope to crawl in")
+	Crawl := flag.Bool("crawl", false, "crawl the resolved domain while testing for proxy misconfigs")
 	Silent := flag.Bool("s", false, "Show Silent output")
-	flag.IntVar(&Depth, "d", 5, "The crawl depth")
-	flag.IntVar(&Threads, "t", 10, "The number of concurrent requests")
+	flag.IntVar(&Depth, "depth", 5, "The crawl depth")
+	flag.IntVar(&Threads, "c", 10, "The number of concurrent requests")
 	flag.Parse()
 
 	rand.Seed(time.Now().UnixNano())
