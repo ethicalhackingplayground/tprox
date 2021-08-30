@@ -2,12 +2,10 @@ package traversal
 
 import (
 	"bufio"
-	"bytes"
 	"fmt"
 	"github.com/ethicalhackingplayground/tprox/tprox/args"
 	"github.com/ethicalhackingplayground/tprox/tprox/discover"
 	"github.com/fatih/color"
-	"io"
 	"net/http"
 	"os"
 	"strings"
