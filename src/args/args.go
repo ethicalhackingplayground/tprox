@@ -18,6 +18,7 @@ var (
 	Crawl    bool
 	Depth    int
 	Regex    string
+	Verbose  bool
 )
 
 func printBanner() {
@@ -25,11 +26,11 @@ func printBanner() {
 	banner := `
 
  
-  __                   
- / /____  _______ __ __
-/ __/ _ \/ __/ _ \\ \ /
-\__/ .__/_/  \___/_\_\   v0.1-dev
-   /_/                  
+ 	  __                   
+	 / /____  _______ __ __
+	/ __/ _ \/ __/ _ \\ \ /
+	\__/ .__/_/  \___/_\_\   v0.1-dev
+   	   /_/                  
 
 	`
 
@@ -44,7 +45,7 @@ func printBanner() {
 }
 
 // Return a true or false if the args are valid.
-func ParseArgs() (bool, bool) {
+func ParseArgs() (bool, bool, bool) {
 
 	// Print the banner
 	printBanner()
@@ -57,13 +58,14 @@ func ParseArgs() (bool, bool) {
 	flag.StringVar(&Output, "o", "", "Output the results to a file")
 	flag.StringVar(&Regex, "r", "", "Filter crawl with regex pattern")
 	Crawl := flag.Bool("c", false, "crawl the resolved domain while testing for proxy misconfigs")
+	Verbose := flag.Bool("c", true, "crawl the resolved domain while testing for proxy misconfigs")
 	flag.IntVar(&Depth, "d", 5, "The crawl depth")
 	flag.IntVar(&Threads, "t", 10, "The number of concurrent requests")
 	flag.Parse()
 	if Wordlist == "" {
 		flag.PrintDefaults()
-		return false, *Crawl
+		return false, *Crawl, *Verbose
 	} else {
-		return true, *Crawl
+		return true, *Crawl, *Verbose
 	}
 }

@@ -20,16 +20,19 @@ var Payloads = [3]string{"..%2f", "..;/", "../"}
 
 // Parse the arguments and run the test function.
 func main() {
-	parsed, crawl := args.ParseArgs()
+	parsed, crawl, verbose := args.ParseArgs()
 	if parsed {
-		gologger.Debug().Msg("Finding misconfigured proxies ")
-		fmt.Println("")
-		run(crawl)
+		if verbose == true {
+			gologger.Debug().Msg("Finding misconfigured proxies ")
+			fmt.Println("")
+		}
+
+		run(crawl, verbose)
 	}
 }
 
 // This is where all the path traversal functions begin.
-func run(crawl bool) {
+func run(crawl bool, verbose bool) {
 
 	urls := make(chan string)
 	// Crawling is enabled
@@ -44,10 +47,10 @@ func run(crawl bool) {
 			for url := range urls {
 				for _, p := range Payloads {
 					if crawl {
-						Crawl(c, &wg, url, p)
+						Crawl(c, &wg, url, p, verbose)
 
 					} else {
-						traversal.TestTraversal(&wg, url, p)
+						traversal.TestTraversal(&wg, url, p, verbose)
 					}
 				}
 
@@ -67,7 +70,7 @@ func run(crawl bool) {
 }
 
 // Crawl the host
-func Crawl(c *colly.Collector, wg *sync.WaitGroup, url string, payload string) {
+func Crawl(c *colly.Collector, wg *sync.WaitGroup, url string, payload string, verbose bool) {
 
 	// Find and visit all links
 	c.OnHTML("a[href]", func(e *colly.HTMLElement) {
@@ -79,7 +82,7 @@ func Crawl(c *colly.Collector, wg *sync.WaitGroup, url string, payload string) {
 	c.OnRequest(func(r *colly.Request) {
 		matched, _ := regexp.MatchString(args.Regex, r.URL.String())
 		if matched {
-			traversal.TestTraversal(wg, r.URL.String(), payload)
+			traversal.TestTraversal(wg, r.URL.String(), payload, verbose)
 		}
 
 	})

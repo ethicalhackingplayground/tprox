@@ -27,7 +27,7 @@ func CraftTestUrl(count int, url string, payload string) string {
 }
 
 // Test for proxy traversal attacks
-func TestTraversal(wg *sync.WaitGroup, url string, payload string) {
+func TestTraversal(wg *sync.WaitGroup, url string, payload string, verbose bool) {
 
 	client := http.Client{}
 
@@ -69,7 +69,9 @@ func TestTraversal(wg *sync.WaitGroup, url string, payload string) {
 		}
 
 		if resp.StatusCode == 404 {
-			gologger.Debug().Msg("[-] Found Proxy, Bruteforcing " + testUrl)
+			if verbose {
+				gologger.Debug().Msg("Found Proxy, Bruteforcing " + testUrl)
+			}
 
 			// Start bruteforcing for files and directories
 			words := make(chan string)

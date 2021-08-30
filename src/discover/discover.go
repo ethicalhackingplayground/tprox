@@ -11,7 +11,7 @@ import (
 // Start the content discovery for files and directories
 func BruteForDirAndFile(client http.Client, wg *sync.WaitGroup, url string, testUrl string, word string) {
 
-	info := color.New(color.FgWhite, color.Italic).SprintFunc()
+	info := color.New(color.FgWhite, color.Bold).SprintFunc()
 	white := color.New(color.FgWhite, color.Bold).SprintFunc()
 	green := color.New(color.FgGreen, color.Bold).SprintFunc()
 
