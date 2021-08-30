@@ -58,7 +58,7 @@ func run(crawl bool, silent bool) {
 					if crawl {
 						Crawl(c, url, silent)
 						for urlCrawled := range crawls {
-							traversal.TestTraversal(wg, urlCrawled, p, silent)
+							traversal.TestTraversal(&wg, urlCrawled, p, silent)
 						}
 
 					} else {
