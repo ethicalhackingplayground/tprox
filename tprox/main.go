@@ -2,7 +2,6 @@ package main
 
 import (
 	"bufio"
-	"fmt"
 	"github.com/ethicalhackingplayground/tprox/tprox/args"
 	"github.com/ethicalhackingplayground/tprox/tprox/traversal"
 	"github.com/gocolly/colly"
@@ -20,7 +19,6 @@ func main() {
 	parsed, crawl, silent := args.ParseArgs()
 	if parsed {
 		gologger.Info().Msg("Finding misconfigured proxies")
-		fmt.Println("")
 
 		run(crawl, silent)
 	}
