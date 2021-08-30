@@ -33,7 +33,6 @@ func run(crawl bool, silent bool) {
 	// Crawling is enabled
 	c := colly.NewCollector(
 		// Visit only these root domain
-		colly.AllowedDomains(args.Scope),
 		colly.MaxDepth(args.Depth),
 	)
 
@@ -81,20 +80,34 @@ func Crawl(c *colly.Collector, wg *sync.WaitGroup, url string, payload string, s
 	c.OnRequest(func(r *colly.Request) {
 
 		url := r.URL.String()
-		if args.Regex != "" {
-			if regexp.MatchString(args.Regex, url) {
+		match, _ := regexp.MatchString(args.Regex, url)
+		inScope, _ := regexp.MatchString(args.Scope, url)
+		if args.Regex != "" && args.Scope != "" && match && inScope {
 
+			if !silent {
+				gologger.Debug().Msg("Crawled " + url)
+			}
+			traversal.TestTraversal(wg, url, payload, silent)
+
+		} else {
+			if args.Regex != "" && match {
 				if !silent {
 					gologger.Debug().Msg("Crawled " + url)
 				}
 				traversal.TestTraversal(wg, url, payload, silent)
 
+			} else if args.Scope != "" && inScope {
+				if !silent {
+					gologger.Debug().Msg("Crawled " + url)
+				}
+				traversal.TestTraversal(wg, url, payload, silent)
+			} else {
+				if !silent {
+					gologger.Debug().Msg("Crawled " + url)
+				}
+				traversal.TestTraversal(wg, url, payload, silent)
 			}
-		} else {
-			if !silent {
-				gologger.Debug().Msg("Crawled " + url)
-			}
-			traversal.TestTraversal(wg, url, payload, silent)
+
 		}
 
 	})
