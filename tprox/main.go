@@ -8,7 +8,6 @@ import (
 	"github.com/projectdiscovery/gologger"
 	"os"
 	"regexp"
-	"strings"
 	"sync"
 )
 
@@ -79,35 +78,30 @@ func Crawl(c *colly.Collector, wg *sync.WaitGroup, url string, payload string, s
 	c.OnRequest(func(r *colly.Request) {
 
 		url := r.URL.String()
-		// Only Crawl within the scope of the test
-		if strings.Contains(url, args.Scope) {
+		r1, _ := regexp.Compile(args.Regex)
+		r2, _ := regexp.Compile(args.Scope)
+		matched := r1.MatchString(url)
+		inScope := r2.MatchString(url)
 
-			matched, _ := regexp.MatchString(args.Regex, url)
-
-			if args.Regex != "" {
-				if matched {
-					if !silent {
-						gologger.Debug().Msg("Crawled " + url)
-					}
-					traversal.TestTraversal(wg, url, payload, silent)
+		if inScope {
+			if matched {
+				if !silent {
+					gologger.Debug().Msg("Crawled " + url)
 				}
+				traversal.TestTraversal(wg, url, payload, silent)
 			} else {
 				if !silent {
 					gologger.Debug().Msg("Crawled " + url)
 				}
 				traversal.TestTraversal(wg, url, payload, silent)
 			}
+
 		} else {
-
-			matched, _ := regexp.MatchString(args.Regex, url)
-
-			if args.Regex != "" {
-				if matched {
-					if !silent {
-						gologger.Debug().Msg("Crawled " + url)
-					}
-					traversal.TestTraversal(wg, url, payload, silent)
+			if matched {
+				if !silent {
+					gologger.Debug().Msg("Crawled " + url)
 				}
+				traversal.TestTraversal(wg, url, payload, silent)
 			} else {
 				if !silent {
 					gologger.Debug().Msg("Crawled " + url)

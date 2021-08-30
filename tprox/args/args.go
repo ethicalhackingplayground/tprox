@@ -54,7 +54,7 @@ func ParseArgs() (bool, bool, bool) {
 	flag.StringVar(&Wordlist, "w", "", "The wordlist to use against a valid endpoint to traverse")
 	flag.StringVar(&Output, "o", "", "Output the results to a file")
 	flag.StringVar(&Regex, "regex", "", "Filter crawl with regex pattern")
-	flag.StringVar(&Scope, "scope", "", "Specify a scope to crawl in")
+	flag.StringVar(&Scope, "scope", "", "Specify a scope to crawl in with a regex")
 	Crawl := flag.Bool("crawl", false, "crawl the resolved domain while testing for proxy misconfigs")
 	Silent := flag.Bool("s", false, "Show Silent output")
 	flag.IntVar(&Depth, "depth", 5, "The crawl depth")
