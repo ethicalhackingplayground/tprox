@@ -83,7 +83,7 @@ func Crawl(c *colly.Collector, wg *sync.WaitGroup, url string, payload string, s
 		matched := r1.MatchString(url)
 		inScope := r2.MatchString(url)
 
-		if args.Scope != "" || args.Regex != "" {
+		if args.Scope != "" && args.Regex != "" {
 			if inScope {
 				if matched {
 					if !silent {
@@ -91,8 +91,19 @@ func Crawl(c *colly.Collector, wg *sync.WaitGroup, url string, payload string, s
 					}
 					traversal.TestTraversal(wg, url, payload, silent)
 				}
+			}
 
-			} else {
+		} else {
+			if args.Scope != "" {
+				if inScope {
+					if !silent {
+						gologger.Debug().Msg("Crawled " + url)
+					}
+					traversal.TestTraversal(wg, url, payload, silent)
+				}
+			}
+
+			if args.Regex != "" {
 				if matched {
 					if !silent {
 						gologger.Debug().Msg("Crawled " + url)
@@ -100,11 +111,7 @@ func Crawl(c *colly.Collector, wg *sync.WaitGroup, url string, payload string, s
 					traversal.TestTraversal(wg, url, payload, silent)
 				}
 			}
-		} else {
-			if !silent {
-				gologger.Debug().Msg("Crawled " + url)
-			}
-			traversal.TestTraversal(wg, url, payload, silent)
+
 		}
 
 	})
