@@ -33,7 +33,6 @@ func run(crawl bool, silent bool) {
 	// Create a new crolly collector
 	c := colly.NewCollector(
 		colly.MaxDepth(args.Depth),
-		colly.Async(true),
 	)
 
 	// Parallelism can be controlled also by spawning fixed
@@ -78,45 +77,47 @@ func Crawl(c *colly.Collector, wg *sync.WaitGroup, url string, payload string, s
 	c.OnHTML("a[href]", func(e *colly.HTMLElement) {
 		link := e.Attr("href")
 		e.Request.Visit(e.Request.AbsoluteURL(link))
-		match, _ := regexp.MatchString(args.Regex, link)
-		inScope, _ := regexp.MatchString(args.Scope, link)
+	})
+
+	// The request of each link visisted
+	c.OnRequest(func(r *colly.Request) {
+
+		match, _ := regexp.MatchString(args.Regex, r.URL.String())
+		inScope, _ := regexp.MatchString(args.Scope, r.URL.String())
 
 		if args.Regex != "" && args.Scope != "" && match && inScope {
 
 			if !silent {
-				gologger.Debug().Msg("Crawled " + link)
+				gologger.Debug().Msg("Crawled " + r.URL.String())
 			}
-			traversal.TestTraversal(wg, link, payload, silent)
+			traversal.TestTraversal(wg, r.URL.String(), payload, silent)
 
 		} else {
 			if args.Regex != "" {
 				if match {
 					if !silent {
-						gologger.Debug().Msg("Crawled " + link)
+						gologger.Debug().Msg("Crawled " + r.URL.String())
 					}
-					traversal.TestTraversal(wg, link, payload, silent)
+					traversal.TestTraversal(wg, r.URL.String(), payload, silent)
 				}
 
 			} else if args.Scope != "" {
 				if inScope {
 					if !silent {
-						gologger.Debug().Msg("Crawled " + link)
+						gologger.Debug().Msg("Crawled " + r.URL.String())
 					}
-					traversal.TestTraversal(wg, link, payload, silent)
+					traversal.TestTraversal(wg, r.URL.String(), payload, silent)
 				}
 
 			} else {
 				if !silent {
-					gologger.Debug().Msg("Crawled " + link)
+					gologger.Debug().Msg("Crawled " + r.URL.String())
 				}
-				traversal.TestTraversal(wg, link, payload, silent)
-
+				traversal.TestTraversal(wg, r.URL.String(), payload, silent)
 			}
 
 		}
-	})
 
+	})
 	c.Visit(url)
-	// Wait until threads are finished
-	c.Wait()
 }
