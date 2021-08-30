@@ -34,6 +34,14 @@ func run(crawl bool, silent bool) {
 		colly.MaxDepth(args.Depth),
 	)
 
+	// Limit the maximum parallelism to 2
+	// This is necessary if the goroutines are dynamically
+	// created to control the limit of simultaneous requests.
+	//
+	// Parallelism can be controlled also by spawning fixed
+	// number of go routines.
+	c.Limit(&colly.LimitRule{DomainGlob: "*", Parallelism: 2})
+
 	var wg sync.WaitGroup
 	for i := 0; i < args.Threads; i++ {
 		wg.Add(1)
