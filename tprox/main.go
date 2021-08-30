@@ -32,8 +32,16 @@ func run(crawl bool, silent bool) {
 	urls := make(chan string)
 	// Crawling is enabled
 	c := colly.NewCollector(
+		// Visit only root url and urls which start with "e" or "h" on httpbin.org
+		colly.URLFilters(
+			regexp.MustCompile(args.Scope),
+			regexp.MustCompile(args.Regex),
+		),
 		colly.MaxDepth(args.Depth),
+		colly.Async(true),
 	)
+	c.Limit(&colly.LimitRule{DomainGlob: "*", Parallelism: args.Threads})
+
 	var wg sync.WaitGroup
 	for i := 0; i < args.Threads; i++ {
 		wg.Add(1)
@@ -78,41 +86,11 @@ func Crawl(c *colly.Collector, wg *sync.WaitGroup, url string, payload string, s
 	c.OnRequest(func(r *colly.Request) {
 
 		url := r.URL.String()
-		r1, _ := regexp.Compile(args.Regex)
-		r2, _ := regexp.Compile(args.Scope)
-		matched := r1.MatchString(url)
-		inScope := r2.MatchString(url)
 
-		if args.Scope != "" && args.Regex != "" {
-			if inScope {
-				if matched {
-					if !silent {
-						gologger.Debug().Msg("Crawled " + url)
-					}
-					traversal.TestTraversal(wg, url, payload, silent)
-				}
-			}
-
-		} else {
-			if args.Scope != "" {
-				if inScope {
-					if !silent {
-						gologger.Debug().Msg("Crawled " + url)
-					}
-					traversal.TestTraversal(wg, url, payload, silent)
-				}
-			}
-
-			if args.Regex != "" {
-				if matched {
-					if !silent {
-						gologger.Debug().Msg("Crawled " + url)
-					}
-					traversal.TestTraversal(wg, url, payload, silent)
-				}
-			}
-
+		if !silent {
+			gologger.Debug().Msg("Crawled " + url)
 		}
+		traversal.TestTraversal(wg, url, payload, silent)
 
 	})
 	c.Visit(url)
