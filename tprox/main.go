@@ -78,7 +78,7 @@ func Crawl(c *colly.Collector, wg *sync.WaitGroup, url string, payload string, s
 	c.OnHTML("a[href]", func(e *colly.HTMLElement) {
 		link := e.Attr("href")
 		e.Request.Visit(e.Request.AbsoluteURL(link))
-		match, _ := regexp.MatchString(args.Regex, link))
+		match, _ := regexp.MatchString(args.Regex, link)
 		inScope, _ := regexp.MatchString(args.Scope, link)
 
 		if args.Regex != "" && args.Scope != "" && match && inScope {
