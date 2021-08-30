@@ -25,7 +25,7 @@ func BruteForDirAndFile(client http.Client, wg *sync.WaitGroup, url string, test
 		return
 	}
 
-	if silent == false {
+	if !silent {
 		gologger.Debug().Msg(contentFound)
 	}
 
@@ -51,7 +51,7 @@ func BruteForDirAndFile(client http.Client, wg *sync.WaitGroup, url string, test
 			}
 
 			fmt.Println("")
-			fmt.Printf("%s%s%s %s\n", white("["), green("FOUND"), white("]"), info(contentFound))
+			fmt.Fprintf(color.Output, "\n%s%s%s %s\n", white("["), green("FOUND"), white("]"), info(contentFound))
 		}
 
 	}
