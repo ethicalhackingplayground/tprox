@@ -14,20 +14,18 @@
 
 ---
 
-### Install From Source
+### Install Options
+
+#### From Source
 
 ```sh
 ▶  GO111MODULE=on go get -v  github.com/ethicalhackingplayground/tprox/tprox
 ```
 
-### Install With Docker
+#### Docker
 
 ```sh
 ▶  git clone https://github.com/ethicalhackingplayground/tprox && cd tprox && docker build -t tprox .
-```
-
-```sh
-▶  docker run tprox -h
 ```
 
 ### Usage
@@ -36,13 +34,17 @@
 tprox -h
 ```
 
+```sh
+▶  docker run tprox -h
+```
+
 This will display help for the tool. Here are all the switches it supports.
 
 <details>
 <summary> 👉 tprox help menu 👈</summary>
 
 ```
-Usage of ./tprox:
+Usage of tprox:
   -c    crawl the resolved domain while testing for proxy misconfigs
   -d int
         The crawl depth (default 5)

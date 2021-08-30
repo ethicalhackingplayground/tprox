@@ -76,15 +76,19 @@ func Crawl(c *colly.Collector, wg *sync.WaitGroup, url string, payload string, s
 
 	// The request of each link visisted
 	c.OnRequest(func(r *colly.Request) {
-		if silent == false {
-			gologger.Debug().Msg("Crawled " + r.URL.String())
-		}
+
 		matched, _ := regexp.MatchString(args.Regex, r.URL.String())
 		if args.Regex != "" {
 			if matched {
+				if silent == false {
+					gologger.Debug().Msg("Crawled " + r.URL.String())
+				}
 				traversal.TestTraversal(wg, r.URL.String(), payload, silent)
 			}
 		} else {
+			if silent == false {
+				gologger.Debug().Msg("Crawled " + r.URL.String())
+			}
 			traversal.TestTraversal(wg, r.URL.String(), payload, silent)
 		}
 
