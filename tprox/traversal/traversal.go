@@ -7,6 +7,7 @@ import (
 	"github.com/ethicalhackingplayground/tprox/tprox/args"
 	"github.com/ethicalhackingplayground/tprox/tprox/discover"
 	"github.com/fatih/color"
+	"github.com/projectdiscovery/gologger"
 	"github.com/schollz/progressbar/v3"
 	"io"
 	"net/http"
