@@ -34,9 +34,7 @@ func run(crawl bool, silent bool) {
 	c := colly.NewCollector(
 		// Visit only these root domain
 		colly.MaxDepth(args.Depth),
-		colly.Async(true),
 	)
-	c.Limit(&colly.LimitRule{DomainGlob: "*", Parallelism: args.Threads})
 	var wg sync.WaitGroup
 	for i := 0; i < args.Threads; i++ {
 		wg.Add(1)
