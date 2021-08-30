@@ -27,6 +27,8 @@ func main() {
 // This is where all the path traversal functions begin.
 func run(crawl bool, silent bool) {
 
+	currPayload := ""
+
 	urls := make(chan string)
 	// Crawling is enabled
 	c := colly.NewCollector(
@@ -36,15 +38,16 @@ func run(crawl bool, silent bool) {
 	for i := 0; i < args.Threads; i++ {
 		wg.Add(1)
 		go func() {
+			for _, p := range Payloads {
+				currPayload = p
+			}
 			// Url channel loop
 			for url := range urls {
-				for _, p := range Payloads {
-					if crawl {
-						Crawl(c, &wg, url, p, silent)
+				if crawl {
+					Crawl(c, &wg, url, currPayload, silent)
 
-					} else {
-						traversal.TestTraversal(&wg, url, p, silent)
-					}
+				} else {
+					traversal.TestTraversal(&wg, url, currPayload, silent)
 				}
 
 			}
