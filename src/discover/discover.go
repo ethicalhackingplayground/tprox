@@ -9,7 +9,7 @@ import (
 )
 
 // Start the content discovery for files and directories
-func bruteForDirAndFile(client http.Client, wg *sync.WaitGroup, url string, testUrl string, word string) {
+func BruteForDirAndFile(client http.Client, wg *sync.WaitGroup, url string, testUrl string, word string) {
 
 	contentFound := testUrl + word
 	contentNotFound := url + "/" + word
