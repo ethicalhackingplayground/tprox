@@ -20,10 +20,7 @@ var Payloads = [3]string{"..%2f", "..;/", "../"}
 func main() {
 	parsed, crawl, silent := args.ParseArgs()
 	if parsed {
-		if silent == false {
-			gologger.Debug().Msg("Finding misconfigured proxies ")
-			fmt.Println("")
-		}
+		gologger.Debug().Msg("Finding misconfigured proxies ")
 
 		run(crawl, silent)
 	}
