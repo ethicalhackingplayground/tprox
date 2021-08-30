@@ -86,13 +86,13 @@ func Crawl(c *colly.Collector, wg *sync.WaitGroup, url string, payload string, s
 
 			if args.Regex != "" {
 				if matched {
-					if silent == false {
+					if !silent {
 						gologger.Debug().Msg("Crawled " + url)
 					}
 					traversal.TestTraversal(wg, url, payload, silent)
 				}
 			} else {
-				if silent == false {
+				if !silent {
 					gologger.Debug().Msg("Crawled " + url)
 				}
 				traversal.TestTraversal(wg, url, payload, silent)
@@ -103,13 +103,13 @@ func Crawl(c *colly.Collector, wg *sync.WaitGroup, url string, payload string, s
 
 			if args.Regex != "" {
 				if matched {
-					if silent == false {
+					if !silent {
 						gologger.Debug().Msg("Crawled " + url)
 					}
 					traversal.TestTraversal(wg, url, payload, silent)
 				}
 			} else {
-				if silent == false {
+				if !silent {
 					gologger.Debug().Msg("Crawled " + url)
 				}
 				traversal.TestTraversal(wg, url, payload, silent)
