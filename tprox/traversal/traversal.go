@@ -69,9 +69,10 @@ func TestTraversal(wg *sync.WaitGroup, url string, payload string, silent bool) 
 		}
 
 		if resp.StatusCode == 404 {
-			if silent == false {
-				gologger.Info().Msg("Found Proxy, Bruteforcing " + testUrl)
-			}
+			blue := color.New(color.FgBlue, color.Bold).SprintFunc()
+			white := color.New(color.FgWhite, color.Bold).SprintFunc()
+			green := color.New(color.FgGreen, color.Bold).SprintFunc()
+			gologger.Info().Msg("%s%s%s %s ", white("["), blue("Proxy"), white("]"), white("Proxy, Bruteforcing..."))
 
 			// Start bruteforcing for files and directories
 			words := make(chan string)

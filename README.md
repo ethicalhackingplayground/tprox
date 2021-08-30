@@ -8,7 +8,7 @@
 <p align="center">
   <a href="#install">Install</a> •
   <a href="#usage">Usage</a> •
-  <a href="#examples">Usage</a> •
+  <a href="#examples">Examples</a> •
   <a href="https://discord.gg/MQWCem5b">Join Discord</a> 
 </p>
 
