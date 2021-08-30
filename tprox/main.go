@@ -75,13 +75,14 @@ func run(crawl bool, silent bool) {
 	for _, crawledUrl := range crawledUrls {
 		crawls <- crawledUrl
 	}
-	close(crawls)
+
 	uscanner := bufio.NewScanner(os.Stdin)
 	for uscanner.Scan() {
 		urls <- uscanner.Text()
 	}
 
 	close(urls)
+	close(crawls)
 	wg.Wait()
 }
 
