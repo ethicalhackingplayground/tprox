@@ -37,7 +37,7 @@ func run(crawl bool, silent bool) {
 
 	// Parallelism can be controlled also by spawning fixed
 	// number of go routines.
-	c.Limit(&colly.LimitRule{DomainGlob: "*", Parallelism: args.Threads})
+	c.Limit(&colly.LimitRule{DomainGlob: args.Scope, Parallelism: 2})
 
 	var wg sync.WaitGroup
 	for i := 0; i < args.Threads; i++ {
