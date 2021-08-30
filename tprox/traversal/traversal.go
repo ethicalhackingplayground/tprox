@@ -4,7 +4,6 @@ import (
 	"bufio"
 	"github.com/ethicalhackingplayground/tprox/tprox/args"
 	"github.com/ethicalhackingplayground/tprox/tprox/discover"
-	"github.com/fatih/color"
 	"github.com/projectdiscovery/gologger"
 	"github.com/schollz/progressbar/v3"
 	"net/http"
@@ -71,9 +70,6 @@ func TestTraversal(wg *sync.WaitGroup, url string, payload string, silent bool) 
 		}
 
 		if resp.StatusCode == 404 {
-
-			white := color.New(color.FgWhite, color.Bold).SprintFunc()
-			blue := color.New(color.FgBlue, color.Bold).SprintFunc()
 
 			gologger.Info().Msg("Discovery Interesting Files/Dirs on " + testUrl)
 
