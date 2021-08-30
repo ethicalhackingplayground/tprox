@@ -1,4 +1,4 @@
-module github.com/ethicalhackingplayground/tprox/src
+module github.com/ethicalhackingplayground/tprox/tprox
 
 go 1.13
 
