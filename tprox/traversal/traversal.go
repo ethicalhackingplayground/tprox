@@ -75,15 +75,14 @@ func TestTraversal(wg *sync.WaitGroup, url string, payload string, silent bool) 
 			white := color.New(color.FgWhite, color.Bold).SprintFunc()
 			blue := color.New(color.FgBlue, color.Bold).SprintFunc()
 
-			if !silent {
-				fmt.Printf("%s%s%s %s\n", white("["), blue("Proxy"), white("]"), white(testUrl))
-			}
+			fmt.Printf("%s%s%s %s\n", white("["), blue("Proxy"), white("]"), white(testUrl))
 
 			// Start bruteforcing for files and directories
 			words := make(chan string)
 
 			// Read in the wordlist list
 			wordFile, err := os.Open(args.Wordlist)
+			count := int64(len(LinesInFile(args.Wordlist)))
 			if err != nil {
 				return
 			}
@@ -91,7 +90,7 @@ func TestTraversal(wg *sync.WaitGroup, url string, payload string, silent bool) 
 			if err != nil {
 				return
 			}
-			bar := progressbar.Default(100)
+			bar := progressbar.Default(count)
 			for i := 0; i < args.Threads; i++ {
 				wg.Add(1)
 				go func() {
@@ -115,4 +114,18 @@ func TestTraversal(wg *sync.WaitGroup, url string, payload string, silent bool) 
 
 		}
 	}
+}
+
+func LinesInFile(fileName string) []string {
+	f, _ := os.Open(fileName)
+	// Create new Scanner.
+	scanner := bufio.NewScanner(f)
+	result := []string{}
+	// Use Scan.
+	for scanner.Scan() {
+		line := scanner.Text()
+		// Append line to result.
+		result = append(result, line)
+	}
+	return result
 }
