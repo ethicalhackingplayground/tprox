@@ -92,17 +92,18 @@ func TestTraversal(wg *sync.WaitGroup, url string, payload string, silent bool) 
 			wordBytes := bufio.NewScanner(wordFile)
 			count, err := lineCounter(wordFile)
 			if err != nil {
+				gologger.Error().Msg(err.Message())
 				return
 			}
 			bar := progressbar.Default(int64(count))
 			for i := 0; i < args.Threads; i++ {
 				wg.Add(1)
-				bar.Add(1)
 				go func() {
 
 					// wordlist brute channel loop
 					for word := range words {
 						discover.BruteForDirAndFile(client, wg, url, testUrl, word, silent)
+						bar.Add(1)
 					}
 					time.Sleep(40 * time.Millisecond)
 
