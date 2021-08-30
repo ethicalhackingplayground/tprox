@@ -2,14 +2,13 @@ package main
 
 import (
 	"bufio"
-	"os"
-	"regexp"
-	"sync"
-
 	"github.com/ethicalhackingplayground/tprox/src/args"
 	"github.com/ethicalhackingplayground/tprox/src/traversal"
 	"github.com/gocolly/colly"
 	"github.com/projectdiscovery/gologger"
+	"os"
+	"regexp"
+	"sync"
 )
 
 // The payloads to test
