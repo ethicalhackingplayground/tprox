@@ -14,8 +14,8 @@ github.com/creack/pty v1.1.9/go.mod h1:oKZEueFk5CKHvIhNR5MUki03XCEU+Q6VDXinZuGJ3
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
-github.com/ethicalhackingplayground/tprox/src v0.0.0-20210830071711-f12f51ddcb9e h1:Y1+7HdOML1PwD+069RHid8vh6RmDDn/L+XG0FRMprlk=
-github.com/ethicalhackingplayground/tprox/src v0.0.0-20210830071711-f12f51ddcb9e/go.mod h1:Kt5QhQHWW1yLKmUa2B/T3JKnga9SEs84rqB3GSypReM=
+github.com/ethicalhackingplayground/tprox/tprox v0.0.0-20210830071711-f12f51ddcb9e h1:Y1+7HdOML1PwD+069RHid8vh6RmDDn/L+XG0FRMprlk=
+github.com/ethicalhackingplayground/tprox/tprox v0.0.0-20210830071711-f12f51ddcb9e/go.mod h1:Kt5QhQHWW1yLKmUa2B/T3JKnga9SEs84rqB3GSypReM=
 github.com/fatih/color v1.12.0 h1:mRhaKNwANqRgUBGKmnI5ZxEk7QXmjQeCcuYFMX2bfcc=
 github.com/fatih/color v1.12.0/go.mod h1:ELkj/draVOlAH/xkhN6mQ50Qd0MPOk5AAr3maGEBuJM=
 github.com/gobwas/glob v0.2.3 h1:A4xDbljILXROh+kObIiy5kIaPYD8e96x1tgBhUI5J+Y=
