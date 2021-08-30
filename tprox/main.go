@@ -56,7 +56,7 @@ func run(crawl bool, silent bool) {
 			for url := range urls {
 				for _, p := range Payloads {
 					if crawl {
-						Crawl(c, url, silent)
+						Crawl(links, c, url, silent)
 						for link := range links {
 							if !silent {
 								gologger.Debug().Msg("Crawled " + link)
@@ -74,10 +74,6 @@ func run(crawl bool, silent bool) {
 		}()
 
 	}
-	for _, crawledUrl := range crawledUrls {
-		links <- crawledUrl
-	}
-	close(links)
 	uscanner := bufio.NewScanner(os.Stdin)
 	for uscanner.Scan() {
 		urls <- uscanner.Text()
@@ -88,7 +84,7 @@ func run(crawl bool, silent bool) {
 }
 
 // Crawl the host
-func Crawl(c *colly.Collector, url string, silent bool) {
+func Crawl(links chan string, c *colly.Collector, url string, silent bool) {
 
 	// Find and visit all links
 	c.OnHTML("a[href]", func(e *colly.HTMLElement) {
@@ -104,24 +100,24 @@ func Crawl(c *colly.Collector, url string, silent bool) {
 
 		if args.Regex != "" && args.Scope != "" && match && inScope {
 
-			crawledUrls = append(crawledUrls, r.URL.String())
+			links <- r.URL.String()
 
 		} else {
 			if args.Regex != "" {
 				if match {
 
-					crawledUrls = append(crawledUrls, r.URL.String())
+					links <- r.URL.String()
 				}
 
 			} else if args.Scope != "" {
 				if inScope {
 
-					crawledUrls = append(crawledUrls, r.URL.String())
+					links <- r.URL.String()
 				}
 
 			} else {
 
-				crawledUrls = append(crawledUrls, r.URL.String())
+				links <- r.URL.String()
 			}
 
 		}
