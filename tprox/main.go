@@ -18,7 +18,7 @@ var Payloads = [3]string{"..%2f", "..;/", "%2e%2e%2f"}
 func main() {
 	parsed, crawl, silent := args.ParseArgs()
 	if parsed {
-		gologger.Debug().Msg("Finding misconfigured proxies ")
+		gologger.Debug().Msg("Finding misconfigured proxies\n")
 
 		run(crawl, silent)
 	}
@@ -32,8 +32,9 @@ func run(crawl bool, silent bool) {
 	c := colly.NewCollector(
 		// Visit only these root domain
 		colly.MaxDepth(args.Depth),
+		colly.Async(true),
 	)
-
+	c.Limit(&colly.LimitRule{DomainGlob: "*", Parallelism: args.Threads})
 	var wg sync.WaitGroup
 	for i := 0; i < args.Threads; i++ {
 		wg.Add(1)
