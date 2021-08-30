@@ -35,6 +35,10 @@ func run(crawl bool, silent bool) {
 		colly.MaxDepth(args.Depth),
 	)
 
+	// Parallelism can be controlled also by spawning fixed
+	// number of go routines.
+	c.Limit(&colly.LimitRule{DomainGlob: "*", Parallelism: args.Threads})
+
 	var wg sync.WaitGroup
 	for i := 0; i < args.Threads; i++ {
 		wg.Add(1)
