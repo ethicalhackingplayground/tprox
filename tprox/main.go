@@ -41,7 +41,6 @@ func run(crawl bool, silent bool) {
 		colly.MaxDepth(args.Depth),
 		colly.Async(true),
 	)
-	c.Limit(&colly.LimitRule{DomainGlob: "*", Parallelism: args.Threads})
 
 	var wg sync.WaitGroup
 	for i := 0; i < args.Threads; i++ {
@@ -95,6 +94,4 @@ func Crawl(c *colly.Collector, wg *sync.WaitGroup, url string, payload string, s
 
 	})
 	c.Visit(url)
-	// Wait until threads are finished
-	c.Wait()
 }
