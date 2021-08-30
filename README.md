@@ -45,16 +45,19 @@ This will display help for the tool. Here are all the switches it supports.
 
 ```
 Usage of tprox:
-  -c    crawl the resolved domain while testing for proxy misconfigs
-  -d int
+  -c int
+        The number of concurrent requests (default 10)
+  -crawl
+        crawl the resolved domain while testing for proxy misconfigs
+  -depth int
         The crawl depth (default 5)
   -o string
         Output the results to a file
-  -r string
+  -regex string
         Filter crawl with regex pattern
   -s    Show Silent output
-  -t int
-        The number of concurrent requests (default 10)
+  -scope string
+        Specify a scope to crawl in with a regex
   -w string
         The wordlist to use against a valid endpoint to traverse
 ```
