@@ -14,7 +14,6 @@
 
 ---
 
-
 ### Install
 
 ```sh
@@ -33,9 +32,14 @@ This will display help for the tool. Here are all the switches it supports.
 <summary> 👉 gocrawler help menu 👈</summary>
 
 ```
-Usage of ./src:
+Usage of ./tprox:
+  -c    crawl the resolved domain while testing for proxy misconfigs
+  -d int
+        The crawl depth (default 5)
   -o string
         Output the results to a file
+  -r string
+        Filter crawl with regex pattern
   -t int
         The number of concurrent requests (default 10)
   -w string
@@ -49,7 +53,7 @@ Usage of ./src:
 Finding Server-Side Path Traversal Files/Directories
 
 ```sh
-▶ echo "https://example.com/api/v1" | tprox -w wordlist 
+▶ echo "https://example.com/api/v1" | tprox -w wordlist
 ```
 
 ### License
