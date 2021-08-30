@@ -1,4 +1,4 @@
-module github.com/ethicalhackingplayground/tprox/tprox
+module github.com/ethicalhackingplayground/tprox/tprox latest
 
 go 1.16
 
