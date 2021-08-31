@@ -86,6 +86,12 @@ Usage of tprox:
 ▶ cat urls.txt | tprox -w wordlist
 ```
 
+
+<h1 align="center">
+  <br>
+<img src="static/example.png" width="200px" alt="example">
+</h1>
+
 ### Known Fixes
 
 if for some reason the program fails to install or update run:
