@@ -92,6 +92,13 @@ Usage of tprox:
 <img src="static/example.png" alt="example">
 </h1>
 
+
+### Fixes
+
+- Fixed a crawling bug.
+- Fixed a traversal bug, it now only prints internal files & endpoints very low % of false positives.
+- Made some optimization fixes.
+
 ### Known Fixes
 
 if for some reason the program fails to install or update run:
