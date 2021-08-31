@@ -71,11 +71,15 @@ Usage of tprox:
 ```
 
 ```sh
-▶ echo "https://example.com" | tprox -w wordlist -c
+▶ echo "https://example.com" | tprox -w wordlist -crawl
 ```
 
 ```sh
-▶ echo "https://example.com" | tprox -w wordlist -c -r "/api/"
+▶ echo "https://example.com" | tprox -w wordlist -crawl -regex "/api/"
+```
+
+```sh
+▶ echo "https://example.com" | tprox -w wordlist -crawl -regex "/api/" -scope ".*.\.example.com"
 ```
 
 ```sh
