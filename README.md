@@ -89,7 +89,7 @@ Usage of tprox:
 
 <h1 align="center">
   <br>
-<img src="static/example.png" width="200px" alt="example">
+<img src="static/example.png" alt="example">
 </h1>
 
 ### Known Fixes
