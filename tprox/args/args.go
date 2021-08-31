@@ -2,9 +2,6 @@ package args
 
 import (
 	"flag"
-	"math/rand"
-	"runtime"
-	"time"
 
 	"github.com/projectdiscovery/gologger"
 	"github.com/projectdiscovery/gologger/levels"
@@ -60,10 +57,6 @@ func ParseArgs() (bool, bool, bool) {
 	flag.IntVar(&Depth, "depth", 5, "The crawl depth")
 	flag.IntVar(&Threads, "c", 10, "The number of concurrent requests")
 	flag.Parse()
-
-	rand.Seed(time.Now().UnixNano())
-	nCPU := runtime.NumCPU()
-	runtime.GOMAXPROCS(nCPU)
 
 	if Wordlist == "" {
 		flag.PrintDefaults()
