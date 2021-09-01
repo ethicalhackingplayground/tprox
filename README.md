@@ -28,6 +28,8 @@
 ▶  git clone https://github.com/ethicalhackingplayground/tprox && cd tprox && docker build -t tprox .
 ```
 
+---
+
 ### Usage
 
 ```sh
@@ -38,13 +40,15 @@
 ▶  docker run tprox -h
 ```
 
+
+
 This will display help for the tool. Here are all the switches it supports.
 
 <details>
 <summary> 👉 tprox help menu 👈</summary>
 
 ```
-Usage of tprox:
+Usage of ./tprox:
   -c int
         The number of concurrent requests (default 10)
   -crawl
@@ -53,11 +57,15 @@ Usage of tprox:
         The crawl depth (default 5)
   -o string
         Output the results to a file
+  -progress
+        This flag will allow you to turn on the progress bar
   -regex string
         Filter crawl with regex pattern
   -s    Show Silent output
   -scope string
-        Specify a scope to crawl in with a regex
+        Specify a scope to crawl with in using regexs
+  -traverse
+        This flag will allow you to turn on traversing
   -w string
         The wordlist to use against a valid endpoint to traverse
 ```
@@ -67,23 +75,19 @@ Usage of tprox:
 ### Examples
 
 ```sh
-▶ echo "https://example.com/api/v1" | tprox -w wordlist
+▶ echo "https://example.com/api/v1" | tprox -w wordlist -traverse
 ```
 
 ```sh
-▶ echo "https://example.com" | tprox -w wordlist -crawl
+▶ echo "https://example.com" | tprox -w wordlist -crawl -traverse
 ```
 
 ```sh
-▶ echo "https://example.com" | tprox -w wordlist -crawl -regex "/api/"
+▶ echo "https://example.com" | tprox -w wordlist -crawl -traverse -regex "/api/"
 ```
 
 ```sh
-▶ echo "https://example.com" | tprox -w wordlist -crawl -regex "/api/" -scope ".*.\.example.com"
-```
-
-```sh
-▶ cat urls.txt | tprox -w wordlist
+▶ echo "https://example.com" | tprox -w wordlist -crawl -traverse -regex "/api/" -scope ".*.\.example.com"
 ```
 
 
@@ -92,6 +96,14 @@ Usage of tprox:
 <img src="static/example.png" alt="example">
 </h1>
 
+--- 
+
+### Changes
+
+- Added some additional flags to help aid finding traversal misconfigurations
+- Optimised the crawler
+- Added a flag to disable/enable the progress bar
+- Fixed the silent flag
 
 ### Fixes
 
