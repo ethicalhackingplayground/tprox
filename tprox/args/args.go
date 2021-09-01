@@ -17,6 +17,8 @@ var (
 	Regex    string
 	Silent   bool
 	Scope    string
+	Traverse bool
+	Progress bool
 )
 
 func printBanner() {
@@ -43,7 +45,7 @@ func printBanner() {
 }
 
 // Return a true or false if the args are valid.
-func ParseArgs() (bool, bool, bool) {
+func ParseArgs() (bool, bool, bool, bool, bool) {
 
 	// Print the banner
 	printBanner()
@@ -54,14 +56,17 @@ func ParseArgs() (bool, bool, bool) {
 	flag.StringVar(&Scope, "scope", "", "Specify a scope to crawl with in using regexs")
 	Crawl := flag.Bool("crawl", false, "crawl the resolved domain while testing for proxy misconfigs")
 	Silent := flag.Bool("s", false, "Show Silent output")
+	Traverse := flag.Bool("traverse", false, "This flag will allow you to turn on traversing")
+	Progress := flag.Bool("progress", false, "This flag will allow you to turn on the progress bar")
 	flag.IntVar(&Depth, "depth", 5, "The crawl depth")
+
 	flag.IntVar(&Threads, "c", 10, "The number of concurrent requests")
 	flag.Parse()
 
 	if Wordlist == "" {
 		flag.PrintDefaults()
-		return false, *Crawl, *Silent
+		return false, *Crawl, *Silent, *Traverse, *Progress
 	} else {
-		return true, *Crawl, *Silent
+		return true, *Crawl, *Silent, *Traverse, *Progress
 	}
 }

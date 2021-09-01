@@ -23,19 +23,19 @@ var links = []string{}
 
 // Parse the arguments and run the test function.
 func main() {
-	parsed, crawl, silent := args.ParseArgs()
+	parsed, crawl, silent, traverse, progress := args.ParseArgs()
 	if parsed {
 		gologger.Debug().Msg("Finding misconfigured proxies")
 		fmt.Println("")
 		rand.Seed(time.Now().UnixNano())
 		nCPU := runtime.NumCPU()
 		runtime.GOMAXPROCS(nCPU)
-		run(crawl, silent)
+		run(crawl, silent, traverse, progress)
 	}
 }
 
 // This is where all the path traversal functions begin.
-func run(crawl bool, silent bool) {
+func run(crawl bool, silent bool, traverse bool, progress bool) {
 
 	urls := make(chan string)
 
@@ -65,17 +65,28 @@ func run(crawl bool, silent bool) {
 			go Crawl(urls, &wg, c, link, silent)
 
 		}
-		for _, p := range Payloads {
-
+		if !traverse {
 			for u := range urls {
 				// Url channel loop
 				if !silent {
 					gologger.Debug().Msg("Crawled " + u)
 				}
-				traversal.TestTraversal(&wg, u, p, silent)
+				traversal.TestTraversal(&wg, u, "", silent, traverse, progress)
 			}
+		} else {
+			for _, p := range Payloads {
 
+				for u := range urls {
+					// Url channel loop
+					if !silent {
+						gologger.Debug().Msg("Crawled " + u)
+					}
+					traversal.TestTraversal(&wg, u, p, silent, traverse, progress)
+				}
+
+			}
 		}
+
 		wg.Wait()
 
 	} else {
@@ -86,8 +97,13 @@ func run(crawl bool, silent bool) {
 
 				// Url channel loop
 				for url := range urls {
-					for _, p := range Payloads {
-						traversal.TestTraversal(&wg, url, p, silent)
+
+					if traverse == false {
+						traversal.TestTraversal(&wg, url, "", silent, traverse, progress)
+					} else {
+						for _, p := range Payloads {
+							traversal.TestTraversal(&wg, url, p, silent, traverse, progress)
+						}
 					}
 
 				}
@@ -148,6 +164,7 @@ func Crawl(links chan string, wg *sync.WaitGroup, c *colly.Collector, url string
 
 	// Start scraping on https://en.wikipedia.org
 	c.Visit(url)
-	c.Wait()
 	wg.Done()
+	c.Wait()
+
 }
