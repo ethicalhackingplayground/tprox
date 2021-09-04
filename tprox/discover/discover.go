@@ -21,6 +21,7 @@ func BruteForDirAndFile(client http.Client, wg *sync.WaitGroup, url string, test
 	contentNotFound := url + "/" + word
 	rootDomain := strings.Split(contentNotFound, "/")[0] + "//" + strings.Split(contentNotFound, "/")[2] + "/" + word
 	contentFound := testUrl + word
+
 	resp1, err := http.Get(contentFound)
 	if err != nil {
 		return
