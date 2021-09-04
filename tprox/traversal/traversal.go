@@ -129,12 +129,12 @@ func TestTraversal(wg *sync.WaitGroup, url string, payload string, silent bool, 
 						wg.Done()
 					}
 
-					for wordBytes.Scan() {
-						words <- wordBytes.Text()
-					}
-					close(words)
-
 				}
+
+				for wordBytes.Scan() {
+					words <- wordBytes.Text()
+				}
+				close(words)
 			}
 		}
 	} else {
