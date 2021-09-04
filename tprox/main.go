@@ -17,7 +17,7 @@ import (
 )
 
 // The payloads to test
-var Payloads = [3]string{"..%2f", "..;/", "%2e%2e%2f"}
+var Payloads = [3]string{"..%2f", "..;", "%2e%2e%2f"}
 var link = ""
 var links = []string{}
 
