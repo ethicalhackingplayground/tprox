@@ -61,7 +61,7 @@ Usage of ./tprox:
         This flag will allow you to turn on the progress bar
   -regex string
         Filter crawl with regex pattern
-  -s    Show Silent output
+  -silent    Show Silent output
   -scope string
         Specify a scope to crawl with in using regexs
   -traverse
