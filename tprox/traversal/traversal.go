@@ -9,6 +9,8 @@ import (
 	"sync"
 	"time"
 
+	"crypto/tls"
+
 	"github.com/ethicalhackingplayground/tprox/tprox/args"
 	"github.com/ethicalhackingplayground/tprox/tprox/discover"
 	"github.com/fatih/color"
@@ -32,7 +34,10 @@ func CraftTestUrl(count int, url string, payload string) string {
 // Test for proxy traversal attacks
 func TestTraversal(wg *sync.WaitGroup, url string, payload string, silent bool, traverse bool, progress bool) {
 
-	client := http.Client{}
+	tr := &http.Transport{
+		TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
+	}
+	client := &http.Client{Transport: tr}
 
 	var testUrl = ""
 
@@ -102,7 +107,7 @@ func TestTraversal(wg *sync.WaitGroup, url string, payload string, silent bool, 
 
 							// wordlist brute channel loop
 							for word := range words {
-								discover.BruteForDirAndFile(client, wg, url, testUrl, word, silent, traverse)
+								discover.BruteForDirAndFile(*client, wg, url, testUrl, word, silent, traverse)
 								bar.Add(1)
 							}
 							time.Sleep(40 * time.Millisecond)
@@ -119,7 +124,7 @@ func TestTraversal(wg *sync.WaitGroup, url string, payload string, silent bool, 
 
 							// wordlist brute channel loop
 							for word := range words {
-								discover.BruteForDirAndFile(client, wg, url, testUrl, word, silent, traverse)
+								discover.BruteForDirAndFile(*client, wg, url, testUrl, word, silent, traverse)
 							}
 
 						}()
@@ -164,7 +169,7 @@ func TestTraversal(wg *sync.WaitGroup, url string, payload string, silent bool, 
 
 					// wordlist brute channel loop
 					for word := range words {
-						discover.BruteForDirAndFile(client, wg, url, testUrl, word, silent, traverse)
+						discover.BruteForDirAndFile(*client, wg, url, testUrl, word, silent, traverse)
 						bar.Add(1)
 					}
 					time.Sleep(40 * time.Millisecond)
@@ -181,7 +186,7 @@ func TestTraversal(wg *sync.WaitGroup, url string, payload string, silent bool, 
 
 					// wordlist brute channel loop
 					for word := range words {
-						discover.BruteForDirAndFile(client, wg, url, testUrl, word, silent, traverse)
+						discover.BruteForDirAndFile(*client, wg, url, testUrl, word, silent, traverse)
 					}
 				}()
 
