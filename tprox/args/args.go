@@ -19,6 +19,7 @@ var (
 	Scope    string
 	Traverse bool
 	Progress bool
+	Test     bool
 )
 
 func printBanner() {
@@ -45,7 +46,7 @@ func printBanner() {
 }
 
 // Return a true or false if the args are valid.
-func ParseArgs() (bool, bool, bool, bool, bool) {
+func ParseArgs() (bool, bool, bool, bool, bool, bool) {
 
 	// Print the banner
 	printBanner()
@@ -58,6 +59,7 @@ func ParseArgs() (bool, bool, bool, bool, bool) {
 	Silent := flag.Bool("silent", false, "Show Silent output")
 	Traverse := flag.Bool("traverse", false, "This flag will allow you to turn on traversing")
 	Progress := flag.Bool("progress", false, "This flag will allow you to turn on the progress bar")
+	Test := flag.Bool("test", false, "Enable/Disable test mode only")
 	flag.IntVar(&Depth, "depth", 5, "The crawl depth")
 
 	flag.IntVar(&Threads, "c", 10, "The number of concurrent requests")
@@ -65,8 +67,8 @@ func ParseArgs() (bool, bool, bool, bool, bool) {
 
 	if Wordlist == "" {
 		flag.PrintDefaults()
-		return false, *Crawl, *Silent, *Traverse, *Progress
+		return false, *Crawl, *Silent, *Traverse, *Progress, *Test
 	} else {
-		return true, *Crawl, *Silent, *Traverse, *Progress
+		return true, *Crawl, *Silent, *Traverse, *Progress, *Test
 	}
 }

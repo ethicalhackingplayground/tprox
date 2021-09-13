@@ -32,7 +32,7 @@ func CraftTestUrl(count int, url string, payload string) string {
 }
 
 // Test for proxy traversal attacks
-func TestTraversal(wg *sync.WaitGroup, url string, payload string, silent bool, traverse bool, progress bool) {
+func TestTraversal(wg *sync.WaitGroup, url string, payload string, silent bool, traverse bool, progress bool, test bool) {
 
 	tr := &http.Transport{
 		TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
@@ -66,7 +66,7 @@ func TestTraversal(wg *sync.WaitGroup, url string, payload string, silent bool, 
 			// Get the test url
 			paths := strings.Split(url, "/")
 			pathCount := len(paths) - 3
-			testUrl = CraftTestUrl(pathCount, url, payload)
+			testUrl = CraftTestUrl(pathCount, url, payload) + "doesnotexist"
 
 			// Get the response from the server to
 			// Perform ongoing testing for proxy misconfigs
@@ -84,59 +84,62 @@ func TestTraversal(wg *sync.WaitGroup, url string, payload string, silent bool, 
 				white := color.New(color.FgWhite, color.Bold).SprintFunc()
 				blue := color.New(color.FgBlue, color.Bold).SprintFunc()
 
-				fmt.Printf("\n%s%s%s %s\n\n", white("["), blue("DISCOVERY"), white("]"), white(testUrl))
+				fmt.Printf("\n%s%s%s %s\n\n", white("["), blue("PROXY FOUND"), white("]"), white(testUrl))
 
-				// Start bruteforcing for files and directories
-				words := make(chan string)
+				if !test {
+					// Start bruteforcing for files and directories
+					words := make(chan string)
 
-				// Read in the wordlist list
-				wordFile, err := os.Open(args.Wordlist)
-				count := int64(len(LinesInFile(args.Wordlist)))
-				if err != nil {
-					return
-				}
-				wordBytes := bufio.NewScanner(wordFile)
-				if err != nil {
-					return
-				}
-				if progress {
-					bar := progressbar.Default(count)
-					for i := 0; i < args.Threads; i++ {
-						wg.Add(1)
-						go func() {
+					// Read in the wordlist list
+					wordFile, err := os.Open(args.Wordlist)
+					count := int64(len(LinesInFile(args.Wordlist)))
+					if err != nil {
+						return
+					}
+					wordBytes := bufio.NewScanner(wordFile)
+					if err != nil {
+						return
+					}
+					if progress {
+						bar := progressbar.Default(count)
+						for i := 0; i < args.Threads; i++ {
+							wg.Add(1)
+							go func() {
 
-							// wordlist brute channel loop
-							for word := range words {
-								discover.BruteForDirAndFile(*client, wg, url, testUrl, word, silent, traverse)
-								bar.Add(1)
-							}
-							time.Sleep(40 * time.Millisecond)
+								// wordlist brute channel loop
+								for word := range words {
+									discover.BruteForDirAndFile(*client, wg, url, testUrl, word, silent, traverse)
+									bar.Add(1)
+								}
+								time.Sleep(40 * time.Millisecond)
 
-						}()
-						wg.Done()
+							}()
+							wg.Done()
+						}
+
+					} else {
+
+						for i := 0; i < args.Threads; i++ {
+							wg.Add(1)
+							go func() {
+
+								// wordlist brute channel loop
+								for word := range words {
+									discover.BruteForDirAndFile(*client, wg, url, testUrl, word, silent, traverse)
+								}
+
+							}()
+							wg.Done()
+						}
+
 					}
 
-				} else {
-
-					for i := 0; i < args.Threads; i++ {
-						wg.Add(1)
-						go func() {
-
-							// wordlist brute channel loop
-							for word := range words {
-								discover.BruteForDirAndFile(*client, wg, url, testUrl, word, silent, traverse)
-							}
-
-						}()
-						wg.Done()
+					for wordBytes.Scan() {
+						words <- wordBytes.Text()
 					}
-
+					close(words)
 				}
 
-				for wordBytes.Scan() {
-					words <- wordBytes.Text()
-				}
-				close(words)
 			}
 		}
 	} else {

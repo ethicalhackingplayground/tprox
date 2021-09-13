@@ -3,6 +3,7 @@ module github.com/ethicalhackingplayground/tprox/tprox
 go 1.13
 
 require (
+	dw1.io/go-dork v1.0.1 // indirect
 	github.com/PuerkitoBio/goquery v1.7.1 // indirect
 	github.com/antchfx/htmlquery v1.2.3 // indirect
 	github.com/antchfx/xmlquery v1.3.6 // indirect
@@ -19,9 +20,10 @@ require (
 	github.com/schollz/progressbar/v3 v3.8.2
 	github.com/temoto/robotstxt v1.1.2 // indirect
 	golang.org/x/crypto v0.0.0-20210817164053-32db794688a5 // indirect
-	golang.org/x/net v0.0.0-20210825183410-e898025ed96a // indirect
+	golang.org/x/net v0.0.0-20210903162142-ad29c8ab022f // indirect
 	golang.org/x/sys v0.0.0-20210823070655-63515b42dcdf // indirect
 	golang.org/x/text v0.3.7 // indirect
 	google.golang.org/appengine v1.6.7 // indirect
 	google.golang.org/protobuf v1.27.1 // indirect
+	ktbs.dev/mubeng v0.5.2 // indirect
 )
