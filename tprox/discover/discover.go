@@ -19,8 +19,10 @@ func BruteForDirAndFile(client http.Client, wg *sync.WaitGroup, url string, test
 		white := color.New(color.FgWhite, color.Bold).SprintFunc()
 		green := color.New(color.FgGreen, color.Bold).SprintFunc()
 
-		contentNotFound := url + "/" + word
-		rootDomain := strings.Split(contentNotFound, "/")[0] + "//" + strings.Split(contentNotFound, "/")[2] + "/" + word
+		fullUrl := url
+		endPathLength := len(strings.Split(fullUrl, "/"))
+		endPath := strings.Split(fullUrl, "/")[endPathLength-1] + word
+		rootDomain := strings.Split(fullUrl, "/")[0] + "//" + strings.Split(fullUrl, "/")[2] + "/" + endPath
 		contentFound := testUrl + word
 		resp1, err := http.Get(contentFound)
 		if err != nil {
