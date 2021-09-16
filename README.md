@@ -48,13 +48,17 @@ This will display help for the tool. Here are all the switches it supports.
 <summary> 👉 tprox help menu 👈</summary>
 
 ```
-Usage of tprox:
+Usage of ./tprox:
   -c int
         The number of concurrent requests (default 10)
+  -check
+        Check if a path/folder/file is internal
   -crawl
         crawl the resolved domain while testing for proxy misconfigs
   -depth int
         The crawl depth (default 5)
+  -discover
+        Discover path/folder/file with already found traversal
   -o string
         Output the results to a file
   -progress
@@ -105,6 +109,18 @@ Usage of tprox:
 
 ```sh
 ▶ echo "https://example.com/api" | tprox -test -traverse
+```
+
+#### Check if File is Internal
+
+```sh
+▶ echo "https://example.com/api/internalfile.html" | tprox -check
+```
+
+#### Discover Content 
+
+```sh
+▶ echo "https://example.com/api/..%2f" | tprox -discover -progress -w wordlist
 ```
 
 
