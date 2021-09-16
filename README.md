@@ -48,7 +48,7 @@ This will display help for the tool. Here are all the switches it supports.
 <summary> 👉 tprox help menu 👈</summary>
 
 ```
-Usage of ./tprox:
+Usage of tprox:
   -c int
         The number of concurrent requests (default 10)
   -crawl
@@ -61,9 +61,12 @@ Usage of ./tprox:
         This flag will allow you to turn on the progress bar
   -regex string
         Filter crawl with regex pattern
-  -silent    Show Silent output
   -scope string
         Specify a scope to crawl with in using regexs
+  -silent
+        Show Silent output
+  -test
+        Enable/Disable test mode only
   -traverse
         This flag will allow you to turn on traversing
   -w string
@@ -74,20 +77,34 @@ Usage of ./tprox:
 
 ### Examples
 
+#### Traversal with Brute
+
 ```sh
 ▶ echo "https://example.com/api/v1" | tprox -w wordlist -traverse
 ```
+
+#### Traversal with Crawling & Brute
 
 ```sh
 ▶ echo "https://example.com" | tprox -w wordlist -crawl -traverse
 ```
 
+#### Traversal with Crawling, Regex Match & Brute
+
 ```sh
 ▶ echo "https://example.com" | tprox -w wordlist -crawl -traverse -regex "/api/"
 ```
 
+#### Traversal With Crawling InScope & Brute
+
 ```sh
 ▶ echo "https://example.com" | tprox -w wordlist -crawl -traverse -regex "/api/" -scope ".*.\.example.com"
+```
+
+#### Traversal with Test Only
+
+```sh
+▶ echo "https://example.com/api" | tprox -test -traverse
 ```
 
 
