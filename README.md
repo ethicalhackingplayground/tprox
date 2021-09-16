@@ -6,6 +6,14 @@
 <h4 align="center">TProx is a fast reverse proxy path traversal detector and directory bruteforcer</h4>
 
 <p align="center">
+<a href="https://goreportcard.com/report/github.com/ethicalhackingplayground/tprox"><img src="https://goreportcard.com/badge/github.com/ethicalhackingplayground/tprox"></a>
+<a href="https://github.com/ethicalhackingplayground/tprox/issues"><img src="https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat"></a>
+<a href="https://github.com/ethicalhackingplayground/tprox/releases"><img src="https://img.shields.io/github/release/ethicalhackingplayground/tprox"></a>
+<a href="https://twitter.com/z0idsec"><img src="https://img.shields.io/twitter/follow/z0idsec.svg?logo=twitter"></a>
+<a href="https://discord.gg/MQWCem5b"><img src="https://img.shields.io/discord/862900124740616192.svg?logo=discord"></a>
+</p>
+
+<p align="center">
   <a href="#install">Install</a> •
   <a href="#usage">Usage</a> •
   <a href="#examples">Examples</a> •
