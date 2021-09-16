@@ -38,19 +38,19 @@ var links = []string{}
 
 // Parse the arguments and run the test function.
 func main() {
-	parsed, crawl, silent, traverse, progress, test := args.ParseArgs()
+	parsed, crawl, silent, traverse, progress, test, discover, check := args.ParseArgs()
 	if parsed {
 		gologger.Debug().Msg("Finding misconfigured proxies")
 		fmt.Println("")
 		rand.Seed(time.Now().UnixNano())
 		nCPU := runtime.NumCPU()
 		runtime.GOMAXPROCS(nCPU)
-		run(crawl, silent, traverse, progress, test)
+		run(crawl, silent, traverse, progress, test, discover, check)
 	}
 }
 
 // This is where all the path traversal functions begin.
-func run(crawl bool, silent bool, traverse bool, progress bool, test bool) {
+func run(crawl bool, silent bool, traverse bool, progress bool, test bool, discover bool, check bool) {
 
 	urls := make(chan string)
 
@@ -86,7 +86,7 @@ func run(crawl bool, silent bool, traverse bool, progress bool, test bool) {
 				if !silent {
 					gologger.Debug().Msg("Crawled " + u)
 				}
-				traversal.TestTraversal(&wg, u, "", silent, traverse, progress, test)
+				traversal.TestTraversal(&wg, u, "", silent, traverse, progress, test, discover, check)
 			}
 		} else {
 			for _, p := range Payloads {
@@ -96,7 +96,7 @@ func run(crawl bool, silent bool, traverse bool, progress bool, test bool) {
 					if !silent {
 						gologger.Debug().Msg("Crawled " + u)
 					}
-					traversal.TestTraversal(&wg, u, p, silent, traverse, progress, test)
+					traversal.TestTraversal(&wg, u, p, silent, traverse, progress, test, discover, check)
 				}
 
 			}
@@ -114,10 +114,10 @@ func run(crawl bool, silent bool, traverse bool, progress bool, test bool) {
 				for url := range urls {
 
 					if traverse == false {
-						traversal.TestTraversal(&wg, url, "", silent, traverse, progress, test)
+						traversal.TestTraversal(&wg, url, "", silent, traverse, progress, test, discover, check)
 					} else {
 						for _, p := range Payloads {
-							traversal.TestTraversal(&wg, url, p, silent, traverse, progress, test)
+							traversal.TestTraversal(&wg, url, p, silent, traverse, progress, test, discover, check)
 						}
 					}
 

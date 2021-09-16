@@ -20,6 +20,8 @@ var (
 	Traverse bool
 	Progress bool
 	Test     bool
+	Check    bool
+	Discover bool
 )
 
 func printBanner() {
@@ -46,7 +48,7 @@ func printBanner() {
 }
 
 // Return a true or false if the args are valid.
-func ParseArgs() (bool, bool, bool, bool, bool, bool) {
+func ParseArgs() (bool, bool, bool, bool, bool, bool, bool, bool) {
 
 	// Print the banner
 	printBanner()
@@ -59,11 +61,13 @@ func ParseArgs() (bool, bool, bool, bool, bool, bool) {
 	Silent := flag.Bool("silent", false, "Show Silent output")
 	Traverse := flag.Bool("traverse", false, "This flag will allow you to turn on traversing")
 	Progress := flag.Bool("progress", false, "This flag will allow you to turn on the progress bar")
+	Discover := flag.Bool("discover", false, "Discover path/folder/file with already found traversal")
+	Check := flag.Bool("check", false, "Check if a path/folder/file is internal")
 	Test := flag.Bool("test", false, "Enable/Disable test mode only")
 	flag.IntVar(&Depth, "depth", 5, "The crawl depth")
 
 	flag.IntVar(&Threads, "c", 10, "The number of concurrent requests")
 	flag.Parse()
 
-	return true, *Crawl, *Silent, *Traverse, *Progress, *Test
+	return true, *Crawl, *Silent, *Traverse, *Progress, *Test, *Discover, *Check
 }
