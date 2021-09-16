@@ -65,10 +65,5 @@ func ParseArgs() (bool, bool, bool, bool, bool, bool) {
 	flag.IntVar(&Threads, "c", 10, "The number of concurrent requests")
 	flag.Parse()
 
-	if Wordlist == "" {
-		flag.PrintDefaults()
-		return false, *Crawl, *Silent, *Traverse, *Progress, *Test
-	} else {
-		return true, *Crawl, *Silent, *Traverse, *Progress, *Test
-	}
+	return true, *Crawl, *Silent, *Traverse, *Progress, *Test
 }

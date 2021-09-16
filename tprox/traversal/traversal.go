@@ -85,7 +85,9 @@ func TestTraversal(wg *sync.WaitGroup, url string, payload string, silent bool, 
 				blue := color.New(color.FgBlue, color.Bold).SprintFunc()
 
 				fmt.Printf("\n%s%s%s %s\n\n", white("["), blue("PROXY FOUND"), white("]"), white(testUrl))
-
+				if args.Wordlist == "" {
+					return
+				}
 				if !test {
 					// Start bruteforcing for files and directories
 					words := make(chan string)
@@ -150,7 +152,9 @@ func TestTraversal(wg *sync.WaitGroup, url string, payload string, silent bool, 
 		blue := color.New(color.FgBlue, color.Bold).SprintFunc()
 
 		fmt.Printf("\n%s%s%s %s\n\n", white("["), blue("DISCOVERY"), white("]"), white(testUrl))
-
+		if args.Wordlist == "" {
+			return
+		}
 		// Start bruteforcing for files and directories
 		words := make(chan string)
 
