@@ -137,12 +137,15 @@ Usage of ./tprox:
 - Optimised the crawler
 - Added a flag to disable/enable the progress bar
 - Fixed the silent flag
+- Added check,test & discover flags
 
 ### Fixes
 
 - Fixed a crawling bug.
 - Fixed a traversal bug, it now only prints internal files & endpoints very low % of false positives.
 - Made some optimization fixes.
+- Discover content fix, it was not finding content.
+- Optimisation fixes.
 
 ### Known Fixes
 
